@@ -4,29 +4,50 @@
 
 Basic name registry contract with frontend.
 
-Goals
+## Goals
 * Better grasp on solidity
 * Develop UI frontend
 * Test functionality of contract
 
+## To Do
 
-# truffle-init-webpack
+Name Reg Contract
+* Add fallback
+* Add self-destruct
+* Constructor?
+
+Front End
+* How to iterate over mapping
+* Create table of addresses x names
+* Leverage contract's emitted events
+* Aesthetics
+
+Testing
+* Description, It, Asserts
+
+## Lessons Learned
+* Mapping pros & cons
+* Easy contract interaction via abstraction
+* Running app within window.App & using window.web3
+
+
+### truffle-init-webpack
 Example webpack project with Truffle. Includes contracts, migrations, tests, user interface and webpack build pipeline.
 
-## Usage
+#### Usage
 
 To initialize a project with this exapmple, run `truffle init webpack` inside an empty directory.
 
-## Building and the frontend
+#### Building and the frontend
 
 1. First run `truffle compile`, then run `truffle migrate` to deploy the contracts onto your network of choice (default "development").
 1. Then run `npm run dev` to build the app and serve it on http://localhost:8080
 
-## Possible upgrades
+#### Possible upgrades
 
 * Use the webpack hotloader to sense when contracts or javascript have been recompiled and rebuild the application. Contributions welcome!
 
-## Common Errors
+#### Common Errors
 
 * **Error: Can't resolve '../build/contracts/MetaCoin.json'**
 
