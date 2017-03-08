@@ -8,11 +8,11 @@ contract NameRegistry {
   event AddressRemoved(address indexed account);
 
   // Fallback function
-  function() payable {
+  /*function() payable {
     if (msg.value > 0) {
 
     }
-  }
+  }*/
 
   // Constructor registers EOA caller
   // bytes32 param takes input as string, not hex
