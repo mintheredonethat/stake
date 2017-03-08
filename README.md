@@ -4,6 +4,15 @@
 
 Basic name registry contract with frontend.
 
+INSERT SCREENSHOT/GIF HERE OF USAGE
+
+## How To Run
+* `truffle compile` (one window)
+* `testrpc` (another window)
+* `truffle migrate`
+* `npm run dev`
+* `truffle console` (another window)
+
 ## Goals
 * Better grasp on solidity
 * Develop UI frontend
@@ -11,12 +20,12 @@ Basic name registry contract with frontend.
 
 ## To Do
 
-Name Reg Contract
+Contract
 * Add fallback
 * Add self-destruct
 * Constructor?
 
-Front End
+UI
 * How to iterate over mapping
 * Create table of addresses x names
 * Leverage contract's emitted events
@@ -24,6 +33,10 @@ Front End
 
 Testing
 * Description, It, Asserts
+
+Script
+* Auto-sets accounts
+* Sends ETH to testnet address on MetaMask from local testrpc address
 
 ## Lessons Learned
 * Mapping pros & cons
