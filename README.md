@@ -1,6 +1,13 @@
+# Name Registry smart contract using Truffle framework
+
 03.08.17
 
 Basic name registry contract with frontend.
+
+Goals
+* Better grasp on solidity
+* Develop UI frontend
+* Test functionality of contract
 
 
 # truffle-init-webpack
