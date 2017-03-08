@@ -16,10 +16,10 @@ contract NameRegistry {
 
   // Constructor registers EOA caller
   // bytes32 param takes input as string, not hex
-  function NameRegistry(bytes32 name) public {
+  /*function NameRegistry(bytes32 name) public {
     addresses[name] = msg.sender;
     names[msg.sender] = name;
-  }
+  }*/
 
   function register(bytes32 name) {
     if (addresses[name] == 0 && name != "") {
