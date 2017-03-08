@@ -21,9 +21,9 @@ contract NameRegistry {
     names[msg.sender] = name;
   }*/
 
-  function register(bytes32 name) {
+  function register(bytes32 name, address addr) {
     if (addresses[name] == 0 && name != "") {
-      addresses[name] = msg.sender;
+      addresses[name] = addr;
       names[msg.sender] = name;
     }
     AddressRegistered(msg.sender);
@@ -31,6 +31,8 @@ contract NameRegistry {
 
   function remove(bytes32 name) {
     if (addresses[name] != 0 && name != "") {
+      var temp = addresses[name];
+      names[temp] = "";
       addresses[name] = 0x0;
     }
     AddressRemoved(msg.sender);

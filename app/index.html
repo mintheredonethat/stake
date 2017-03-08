@@ -8,16 +8,32 @@
 <body>
   <h1>Name Registry</h1>
   <h2>Example Truffle Dapp</h2>
-  <!-- <h3>You have <span class="black"><span id="balance"></span> META</span></h3> -->
+
+  <!-- <h3>You have <span class="black"><span id="registry-length"></span> registered</span></h3> -->
+  <!-- Stretch: Table of addresses x names (Iterate over mapping) -->
 
   <br>
-  <h1>Register a Name to an Address</h1>
+  <h1>Register a Name/Address Pair</h1>
   <br><label for="name">Name:</label><input type="text" id="name" placeholder="e.g., Satoshi"></input>
   <br><label for="address">Address:</label><input type="text" id="address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
-  <br><br><button id="send" onclick="App.register()">Register</button>
+  <br><br><button id="register" onclick="App.register()">Register Pair</button>
+  <br><br>
+  
+  <h1>Find the Address associated with a Name</h1>
+  <br><label for="registeredName">Name:</label><input type="text" id="registeredName" placeholder="e.g., Satoshi"></input>
+  <br><br><button id="retrieve-address" onClick="App.getAddress()">Get Address</button>
+  <br><br>
+
+  <h1>Find the Name associated with an Address</h1>
+  <br><label for="registeredAddress">Address:</label><input type="text" id="registeredAddress" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+  <br><br><button id="retrieve-name" onClick="App.getName()">Get Name</button>
+  <br><br>
+
+
   <br><br>
   <span id="status"></span>
-  <br>
+  <br><br>
+  <br><br>
   <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
 </body>
 </html>
