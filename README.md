@@ -2,9 +2,9 @@
 
 03.08.17
 
-Basic name registry contract with frontend.
+Basic name registry contract with a front-end.
 
-INSERT SCREENSHOT/GIF HERE OF USAGE
+INSERT SCREENSHOT/GIF OF USAGE
 
 ## How To Run
 * `truffle compile` (one window)
@@ -14,9 +14,9 @@ INSERT SCREENSHOT/GIF HERE OF USAGE
 * `truffle console` (another window)
 
 ## Goals
-* Better grasp on solidity
-* Develop UI frontend
-* Test functionality of contract
+* Get more comfortable with solidity
+* Develop UI to contract
+* Implement tests for contract
 
 ## To Do
 
@@ -36,13 +36,19 @@ Testing
 
 Script
 * Auto-sets accounts
-* Sends ETH to testnet address on MetaMask from local testrpc address
+  * var acct1 = web3.eth.accounts[0]
+* Send ETH to testnet address on MetaMask from local testrpc address
+  * web3.eth.sendTransaction({ from: acct1, value: web3.toWei(20, 'ether'), to: MM_ADDRESS })
 
 ## Lessons Learned
 * Mapping pros & cons
+  * KV store
+  * Can't iterate easily
 * Easy contract interaction via abstraction
+  * No more hard coding address & ABI
 * Running app within window.App & using window.web3
 
+# Ignore Below - Truffle Notes...
 
 ### truffle-init-webpack
 Example webpack project with Truffle. Includes contracts, migrations, tests, user interface and webpack build pipeline.
