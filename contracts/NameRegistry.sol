@@ -1,6 +1,7 @@
 pragma solidity ^0.4.7;
 
 contract NameRegistry {
+  address owner;
   mapping (bytes32 => address) public addresses;
   mapping (address => bytes32) public names;
 
@@ -14,12 +15,13 @@ contract NameRegistry {
     }
   }*/
 
-  // Constructor registers EOA caller
+  // Constructor sets EOA owner of contract, registers owner
   // bytes32 param takes input as string, not hex
-  /*function NameRegistry(bytes32 name) public {
+  function NameRegistry(bytes32 name) {
+    owner = msg.sender;
     addresses[name] = msg.sender;
     names[msg.sender] = name;
-  }*/
+  }
 
   function register(bytes32 name, address addr) {
     if (addresses[name] == 0 && name != "") {
@@ -44,6 +46,12 @@ contract NameRegistry {
 
   function nameOf(address addr) constant returns(bytes32 name) {
     return names[addr];
+  }
+
+  function kill() {
+    if (msg.sender == owner) {
+      selfdestruct(owner);
+    }
   }
 
 }
