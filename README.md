@@ -2,7 +2,7 @@
 
 03.08.17
 
-Basic name registry contract with a front-end.
+Basic name registry contract with a front-end. Forms the basis of the Stake platform.
 
 INSERT SCREENSHOT/GIF OF USAGE
 
@@ -14,20 +14,18 @@ INSERT SCREENSHOT/GIF OF USAGE
 * `truffle console` (another window)
 
 ## Goals
-* Get more comfortable with solidity
-* Develop UI to contract
+* Comfort with solidity & truffle
+* Develop UI for contract
 * Implement tests for contract
 
 ## To Do
 
 Contract
 * Add fallback
-* Add self-destruct
-* Constructor?
+* onlyOwner modifier?
 
 UI
-* How to iterate over mapping
-* Create table of addresses x names
+* Iterate over mapping to create table of addresses x names
 * Leverage contract's emitted events
 * Aesthetics
 
@@ -47,6 +45,7 @@ Script
 * Easy contract interaction via abstraction
   * No more hard coding address & ABI
 * Running app within window.App & using window.web3
+* web3.toAscii(bytes32)
 
 # Ignore Below - Truffle Notes...
 
