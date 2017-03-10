@@ -1,10 +1,14 @@
-# Name Registry smart contract using Truffle framework
+# Stake platform smart contract using Truffle framework
 
-03.08.17
+Inception: 03.08.17
 
-Basic name registry contract with a front-end. Forms the basis of the Stake platform.
+Get things done with Stake - holds you & your team accountable to meeting your goals.
 
-INSERT SCREENSHOT/GIF OF USAGE
+Leverages:
+* Name registry
+* Multi-signature wallet
+
+INSERT GIF OF USAGE
 
 ## How To Run
 * `truffle compile` (one window)
@@ -17,15 +21,17 @@ INSERT SCREENSHOT/GIF OF USAGE
 * Comfort with solidity & truffle
 * Develop UI for contract
 * Implement tests for contract
+* Multiple contracts' interacting with each other
 
 ## To Do
 
-Contract
+Name Reg Contract
 * Add fallback
 * onlyOwner modifier?
 
 UI
 * Iterate over mapping to create table of addresses x names
+* Update table on successful registry
 * Leverage contract's emitted events
 * Aesthetics
 
@@ -46,6 +52,9 @@ Script
   * No more hard coding address & ABI
 * Running app within window.App & using window.web3
 * web3.toAscii(bytes32)
+* Deployment can take arguments, for contract constructors
+
+
 
 # Ignore Below - Truffle Notes...
 
