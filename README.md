@@ -1,10 +1,10 @@
-# Stake platform smart contract using Truffle framework
+# Stake
 
 Inception: 03.08.17
 
 Get things done with Stake - holds you & your team accountable to meeting your goals.
 
-Leverages:
+Developed via Truffle; leverages smart contracts:
 * Name registry
 * Multi-signature wallet
 
@@ -17,10 +17,10 @@ INSERT GIF OF USAGE
 * `npm run dev`
 * `truffle console` (another window)
 
-## Goals
+## Learning Goals of Stake
 * Comfort with solidity & truffle
-* Develop UI for contract
-* Implement tests for contract
+* Develop UI for contracts
+* Implement tests for contracts
 * Multiple contracts' interacting with each other
 
 ## To Do
