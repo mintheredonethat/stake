@@ -78,7 +78,53 @@ window.App = {
       console.log(e);
       self.setStatus("Error: Check Log");
     })
+
+    // Robhitchen's Approach
+    // NameRegistry.deployed().then(function(instance) {
+    //   return instance.addUser(address, name, {from: account});
+    // }).then(function() {
+    //   self.setStatus('Registration Complete');
+    //   return instance.getUser(address);
+    // }).then(function() {
+    //   console.log(instance.getUser(address));
+    // }).catch(function(e) {
+    //   console.log(e);
+    //   self.setStatus('Error logged');
+    // })
   },
+
+  // getAll: function() {
+  //   var self = this;
+  //   var count = 0;
+  //
+  //   NameRegistry.deployed().then(function(instance) {
+  //     count = instance.getUserCount({ from: account });
+  //   }).then(function() {
+  //     console.log(count);
+  //
+  //     for (var i = 0; i < count; i++) {
+  //       var userAddr;
+  //       instance.getUserAtIndex(i, {from: account}).then(function(r) {
+  //         var userAddr = r;
+  //         console.log(userAddr);
+  //       })
+  //     }
+  //   })
+  //   //
+  //   //
+  //   //   console.log(count);
+  //   //   for (var i = 0; i < count; i++) {
+  //   //     var userAddr = instance.getUserAtIndex(i, {from: account} );
+  //   //     console.log(userAddr);
+  //   //     var userDetails = instance.getUser( {from: account} );
+  //   //     console.log(userDetails);
+  //   //   }
+  //   //   self.setStatus('Fetched; check log');
+  //   // }).catch(function(e) {
+  //   //   console.log(e);
+  //   //   self.setStatus("error logged")
+  //   // })
+  // },
 
   getAddress: function() {
     var self = this;
