@@ -17,9 +17,6 @@ contract MultiSig {
 
   address public owner;
 
-  // For Registry
-  address[] public memberIndex;
-  mapping (address => Member) public members;
 
   // For Transactions
   uint public required;
@@ -48,6 +45,10 @@ contract MultiSig {
 
 /////////////////////////////////// Registry ///////////////////////////////////
 
+  // For Registry
+  address[] public memberIndex;
+  mapping (address => Member) public members;
+
   function isMember(address addr) public constant returns (bool correct) {
     if (memberIndex.length == 0) return false;
 
@@ -59,6 +60,7 @@ contract MultiSig {
     if (isMember(_addr)) throw;
 
     // Register new member to members mapping & push to memberIndex array
+    // push returns length of array
     members[_addr].name = _name;
     members[_addr].index = memberIndex.push(_addr) - 1;
     required++;
@@ -67,6 +69,7 @@ contract MultiSig {
     return memberIndex.length - 1;
   }
 
+  // This doesn't work if length is 1 or if person to remove is also last in list
   function removeMember(address addr) public returns (uint index) {
     // If member isn't registered
     if (!isMember(addr)) throw;
@@ -98,6 +101,14 @@ contract MultiSig {
 
 /////////////////////////////////// MultiSig ///////////////////////////////////
 
+  // Not public?
+  function changeRequirement(uint _required) public {
+    if (msg.sender == owner) {
+      required = _required;
+    }
+  }
+
+  // Not public?
   function submitTransaction(address destination, uint value) public returns (uint transactionId) {
     transactionId = transactionCount;
   }

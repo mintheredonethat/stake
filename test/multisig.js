@@ -7,10 +7,9 @@ contract('MultiSig', function(accounts) {
     .then(function(instance) {
       var owner;
       var required;
-      instance.owner.call()
+      return instance.owner.call()
 
       .then(function(response) {
-        // console.log(response);
         owner = response;
         assert.equal(owner, accounts[0], 'owner != msg.sender');
       })
@@ -22,27 +21,38 @@ contract('MultiSig', function(accounts) {
 
     .then(function(instance) {
       var required;
-      instance.required.call()
+      return instance.required.call()
 
       .then(function(response) {
-        // console.log(response);
         required = response;
         assert.equal(required, 2, "'required' field not set");
       });
     });
   });
 
-  it("Should add a member", function() {
+  it("Should add a member & test functions: getMemberCount, getMember", function() {
     return MultiSig.deployed(2)
 
     .then(function(instance) {
-      var memberCount = 0;
-      instance.addMember(accounts[0], 'Alex')
+      var memberCount;
+      return instance.addMember(accounts[0], 'Alex')
 
       .then(function(response) {
-        // console.log(response);
-        memberCount = response + 1;
-        assert.equal(memberCount, 1, "Did not addMember");
+        return instance.getMemberCount()
+
+        .then(function(response) {
+          memberCount = response;
+          console.log(`MembeCount: ${memberCount}`)
+          assert.equal(memberCount, 1, "Did not addMember");
+
+          return instance.getMember(accounts[0])
+
+          .then(function(response) {
+            // console.log(web3.toAscii(response[0]));
+            console.log(response);
+            assert.equal(response[1], 0, 'Did not get');
+          })
+        })
       });
     });
   });

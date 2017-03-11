@@ -17,6 +17,8 @@ INSERT GIF OF USAGE
 * `npm run dev`
 * `truffle console` (another window)
 
+* `truffle compile && truffle migrate && truffle test ./test/multisig.js`
+
 ## Learning Goals of Stake
 * Comfort with solidity & truffle
 * Develop UI for contracts
