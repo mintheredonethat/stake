@@ -2,6 +2,7 @@ pragma solidity ^0.4.7;
 
 contract NameRegistry {
 
+  uint public accountCount;
   address owner;
   mapping (bytes32 => address) public addresses;
   mapping (address => bytes32) public names;

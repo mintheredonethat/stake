@@ -28,9 +28,12 @@ INSERT GIF OF USAGE
 Name Reg Contract
 * Add fallback
 * onlyOwner modifier?
+* Iterate over mapping to create table of addresses x names
+
+Multi-sig Wallet
+* Finite state (enum) allows for certain functions
 
 UI
-* Iterate over mapping to create table of addresses x names
 * Update table on successful registry
 * Leverage contract's emitted events
 * Aesthetics
