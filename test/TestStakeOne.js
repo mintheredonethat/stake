@@ -48,7 +48,7 @@ contract("StakeOne", function(accounts) {
 
   // Member registry functionality
 
-  it("Should registerMember & getMembers", function() {
+  it("Should registerMember | getMembers", function() {
     return StakeOne.deployed()
 
     .then(function(instance) {
@@ -74,7 +74,7 @@ contract("StakeOne", function(accounts) {
 
   // MultiSig functionality
 
-  it("Should depositStake & getBalance", function() {
+  it("Should depositStake | getBalance", function() {
     return StakeOne.deployed()
 
     .then(function(instance) {
@@ -87,6 +87,39 @@ contract("StakeOne", function(accounts) {
         .then(function(response) {
           bal = response;
           assert.isAtLeast(bal, web3.toWei(10), "Did not depositStake/getBalance");
+        })
+      })
+    })
+  })
+
+  it("Should makeTransaction | currentState | getCurrentTransaction", function() {
+    return StakeOne.deployed({from: accounts[0], value: web3.toWei(10, 'ether')})
+
+    .then(function(instance) {
+      var currentState;
+      // var transactionsCount;
+      return instance.makeTransaction(accounts[1], web3.toWei(5, 'ether'))
+
+      .then(function() {
+        var currentState;
+        return instance.currentState()
+
+        .then(function(response) {
+          var id, destination, amount;
+          currentState = response;
+
+          assert.equal(currentState, 1, "currentState not set")
+          return instance.getCurrentTransaction()
+
+          .then(function(response) {
+            id = response[0];
+            destination = response[1];
+            amount = response[2];
+
+            assert.equal(id, 0, "ID not set");
+            assert.equal(destination, accounts[1], "Destination not set");
+            assert.equal(amount, web3.toWei(5, 'ether'), "amount not set");
+          })
         })
       })
     })

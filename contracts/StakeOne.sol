@@ -17,9 +17,11 @@ contract StakeOne {
   TransactionState public currentState;
 
   struct Transaction {
-    address source;
+    uint id;
+    /*address source;*/
     address destination;
     uint amount;
+    // in Wei
   }
 
   Transaction[] public transactions;
@@ -83,15 +85,34 @@ contract StakeOne {
   }
 
   function makeTransaction(address _to, uint _amount) onlyState(TransactionState.noTransaction)
-    public returns (address, address, uint)
+    returns (bool)
   {
+    if (_amount > this.balance) {
+      throw;
+    }
+
     Transaction memory newTransaction;
-    newTransaction.source = msg.sender;
+    newTransaction.id = transactions.length;
+    /*newTransaction.source = msg.sender;*/
     newTransaction.destination = _to;
     newTransaction.amount = _amount;
 
     transactions.push(newTransaction);
     currentState = TransactionState.transactionMade;
+
+    return true;
+  }
+
+  function getCurrentTransaction() onlyState(TransactionState.transactionMade)
+    public constant returns (uint, address, uint)
+  {
+    var txID = transactions.length - 1;
+    return(
+      transactions[txID].id,
+      /*transactions[txID].source,*/
+      transactions[txID].destination,
+      transactions[txID].amount
+    );
   }
 
   function kill() {
