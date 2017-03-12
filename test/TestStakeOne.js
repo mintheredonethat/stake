@@ -47,7 +47,7 @@ contract("StakeOne", function(accounts) {
 
           assert.equal(required, 1, 'requried not set');
           assert.notEqual(required, 0, "Required not set");
-          
+
           return instance.getMembers()
 
           .then(function(response) {
@@ -122,9 +122,6 @@ contract("StakeOne", function(accounts) {
     })
   })
 
-})
-
-
   // it("Should confirmTransaction", function() {
   //   return StakeOne.deployed()
   //
@@ -134,3 +131,5 @@ contract("StakeOne", function(accounts) {
   //
   //   })
   // })
+
+})

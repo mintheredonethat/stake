@@ -59,6 +59,9 @@ contract StakeOne {
     }
   }
 
+  // Sets owner of contract
+  // Sets required number of confirmations for a withdrawal to be executed
+  // Sets currentState of withdrawal as noWithdrawal
   function StakeOne() {
     owner = msg.sender;
     /*registerMember(_name, msg.sender);*/
@@ -66,6 +69,10 @@ contract StakeOne {
     currentState = WithdrawalState.noWithdrawal;
   }
 
+  // Registers/adds a member struct to the members array
+  // Member struct consists of name & address
+  // Sets mapping of address to true, describes if member is member
+  // Increments the required confirmations
   function registerMember(bytes32 _name, address _addr) {
     // only members should be able to register other members
     Member memory newMember;
@@ -78,6 +85,9 @@ contract StakeOne {
     required += 1;
   }
 
+  // Returns an array of: member names array & member addresses array
+  // Iterates through all members
+  // Stores name of member in names, address of member in addresses
   function getMembers() constant returns(bytes32[], address[]) {
     uint length = members.length;
 
@@ -95,10 +105,12 @@ contract StakeOne {
     return (names, addresses);
   }
 
+  // Allows only members to change the confirmation requirement
   function changeRequirement(uint _required) onlyMember(msg.sender) {
     required = _required;
   }
 
+  // Allows members to send tokens to this contract's balance
   function depositStake() payable onlyMember(msg.sender) returns(bool) {
     if (msg.value > 0) {
       return true;
@@ -108,10 +120,14 @@ contract StakeOne {
     }
   }
 
+  // Returns the balance of this contract
   function getBalance() constant returns(uint) {
     return this.balance;
   }
 
+  // Returns an array containing the current withdrawal proposal's
+    // id, destination, amount, numConfirm
+  // Only members can call this when the withdrawal state is proposed
   function getCurrentWithdrawal()
     onlyState(WithdrawalState.withdrawalProposed)
     onlyMember(msg.sender)
@@ -129,6 +145,11 @@ contract StakeOne {
     );
   }
 
+  // Allows members to make a withdrawal proposal if noWithdrawal state
+  // Creates a newWithdrawal struct within memory, then
+  // Adds newWithdrawal to withdrawals array
+  // Changes withdrawal state to proposed
+  // returns true upon successful proposition
   function makeWithdrawal(address _to, uint _amount)
     onlyState(WithdrawalState.noWithdrawal)
     onlyMember(msg.sender)
@@ -151,6 +172,9 @@ contract StakeOne {
     return true;
   }
 
+  // Allows members to confirm a proposal if withdrawal state is proposed
+  // Checks if member has already confirmed; rejects confirmation if true
+  // Later, checks if requirement is met; change state to confirmed if true 
   function confirmTransaction()
     onlyState(WithdrawalState.withdrawalProposed)
     onlyMember(msg.sender)

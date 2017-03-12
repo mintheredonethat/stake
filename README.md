@@ -25,13 +25,10 @@ INSERT GIF OF USAGE
 
 ## To Do
 
-Name Reg Contract
-* Add fallback
-* onlyOwner modifier?
-* Iterate over mapping to create table of addresses x names
-
-Multi-sig Wallet
-* Finite state (enum) allows for certain functions
+Contracts
+* Modularize, split up monolithic structure
+* Utility contract? For modifiers & common functions
+* Events
 
 UI
 * Update table on successful registry
@@ -39,7 +36,10 @@ UI
 * Aesthetics
 
 Testing
-* Description, It, Asserts
+* Leverage events to debug & log testing process
+* Less nesting
+* Make use of beforeEach?
+* More contracts (they function like a truffle version of description) http://truffleframework.com/docs/getting_started/javascript-tests
 
 Script
 * Auto-sets accounts
@@ -56,6 +56,8 @@ Script
 * Running app within window.App & using window.web3
 * web3.toAscii(bytes32)
 * Deployment can take arguments, for contract constructors
+* Testing: return something, .then()
+* http://chaijs.com/api/assert/
 
 
 
