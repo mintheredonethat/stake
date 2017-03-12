@@ -18,7 +18,7 @@ contract NameReg {
     owner = msg.sender;
   }
 
-  function isMember(uint index) public constant returns (bool correct) {
+  /*function isMember(uint index) public constant returns (bool correct) {
     if (members.length == 0) return false;
 
     return (members[index] != 0);
@@ -35,6 +35,6 @@ contract NameReg {
   }
 
   function removeMember(uint index) {
-  }
+  }*/
 
 }
