@@ -12,6 +12,7 @@ contract StakeOne {
   Member[] public members;
   /*mapping (Member => uint) public memberIndex;*/
   /*mapping (address => Member) public memberAddresses;*/
+  mapping (address => bool) public isMember;
 
   uint public required;
 
@@ -29,6 +30,7 @@ contract StakeOne {
     address destination;
     uint amount;
     // in Wei
+    uint numConfirm;
   }
 
   Withdrawal[] public withdrawals;
@@ -39,9 +41,14 @@ contract StakeOne {
   }
 
   // Modifiers
-  /*modifier isMember() {
-
-  }*/
+  modifier onlyMember(address _addr) {
+    if (isMember[_addr]) {
+      _;
+    }
+    else {
+      throw;
+    }
+  }
 
   modifier onlyState(WithdrawalState expectedState) {
     if (expectedState == currentState) {
@@ -54,7 +61,8 @@ contract StakeOne {
 
   function StakeOne() {
     owner = msg.sender;
-    required++;
+    /*registerMember(_name, msg.sender);*/
+    required = 0;
     currentState = WithdrawalState.noWithdrawal;
   }
 
@@ -66,8 +74,9 @@ contract StakeOne {
     newMember.addr = _addr;
 
     members.push(newMember);
+    isMember[_addr] = true;
+    required += 1;
   }
-
 
   function getMembers()
     constant
@@ -89,12 +98,15 @@ contract StakeOne {
     return (names, addresses);
   }
 
-  function changeRequirement(uint _required) {
+  function changeRequirement(uint _required)
+    onlyMember(msg.sender)
+  {
     // only members can change requirement
   }
 
   function depositStake()
     payable
+    onlyMember(msg.sender)
     returns(bool)
   {
     if (msg.value > 0) {
@@ -105,15 +117,19 @@ contract StakeOne {
     }
   }
 
-  function getBalance() constant returns (uint) {
+  function getBalance()
+    constant
+    returns(uint)
+  {
     return this.balance;
   }
 
   function getCurrentWithdrawal()
     onlyState(WithdrawalState.withdrawalProposed)
+    onlyMember(msg.sender)
     public
     constant
-    returns(uint, address, uint)
+    returns(uint, address, uint, uint)
   {
     var withdrawalID = withdrawals.length - 1;
     return(
@@ -121,15 +137,15 @@ contract StakeOne {
       /*withdrawals[withdrawalID].source,*/
       withdrawals[withdrawalID].destination,
       withdrawals[withdrawalID].amount
+      withdrawals[withdrawalID].numConfirm
     );
   }
 
   function makeWithdrawal(address _to, uint _amount)
     onlyState(WithdrawalState.noWithdrawal)
+    onlyMember(msg.sender)
     returns(bool)
   {
-    // Check if member
-    // Check if withdrawal is bigger than balance
     if (_amount > this.balance) {
       throw;
     }
@@ -139,6 +155,7 @@ contract StakeOne {
     /*newWithdrawal.source = msg.sender;*/
     newWithdrawal.destination = _to;
     newWithdrawal.amount = _amount;
+    newWithdrawal.numConfirm = 0;
 
     withdrawals.push(newWithdrawal);
     currentState = WithdrawalState.withdrawalProposed;
@@ -148,8 +165,10 @@ contract StakeOne {
 
   function confirmTransaction()
     onlyState(WithdrawalState.withdrawalProposed)
+    onlyMember(msg.sender)
     returns (bool)
   {
+    // Get current withdrawal
     // Check if member
     // Check if member has already confirmed, if so, don't count
     // Check if required met, if so, change state
