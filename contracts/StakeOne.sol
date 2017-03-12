@@ -78,10 +78,7 @@ contract StakeOne {
     required += 1;
   }
 
-  function getMembers()
-    constant
-    returns(bytes32[], address[])
-  {
+  function getMembers() constant returns(bytes32[], address[]) {
     uint length = members.length;
 
     bytes32[] memory names = new bytes32[](length);
@@ -98,17 +95,11 @@ contract StakeOne {
     return (names, addresses);
   }
 
-  function changeRequirement(uint _required)
-    onlyMember(msg.sender)
-  {
-    // only members can change requirement
+  function changeRequirement(uint _required) onlyMember(msg.sender) {
+    required = _required;
   }
 
-  function depositStake()
-    payable
-    onlyMember(msg.sender)
-    returns(bool)
-  {
+  function depositStake() payable onlyMember(msg.sender) returns(bool) {
     if (msg.value > 0) {
       return true;
     }
@@ -117,10 +108,7 @@ contract StakeOne {
     }
   }
 
-  function getBalance()
-    constant
-    returns(uint)
-  {
+  function getBalance() constant returns(uint) {
     return this.balance;
   }
 
@@ -168,8 +156,11 @@ contract StakeOne {
     onlyMember(msg.sender)
     returns (bool)
   {
+
     // Get current withdrawal
-    // Check if member
+
+    // HOW TO CHECK MEMBER VOTED ON CURRENT WITHDRAWAL PROPOSAL ?
+
     // Check if member has already confirmed, if so, don't count
     // Check if required met, if so, change state
   }
