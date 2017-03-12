@@ -11,13 +11,11 @@ Developed via Truffle; leverages smart contracts:
 INSERT GIF OF USAGE
 
 ## How To Run
-* `truffle compile` (one window)
-* `testrpc` (another window)
-* `truffle migrate`
-* `npm run dev`
-* `truffle console` (another window)
+* `testrpc` (new window)
+* `truffle compile && truffle migrate && truffle console` (new window)
+* `npm run dev` (new window)
 
-* `truffle compile && truffle migrate && truffle test ./test/multisig.js`
+* `truffle test ./test/multisig.js`
 
 ## Learning Goals of Stake
 * Comfort with solidity & truffle
