@@ -28,6 +28,7 @@ Contracts
 * Modularize, split up monolithic structure
 * Utility contract? For modifiers & common functions
 * Events
+* Current implementation enables DoS attack by never reaching required confirmations (timer)
 
 UI
 * Update table on successful registry

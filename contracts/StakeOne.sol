@@ -17,9 +17,9 @@ contract StakeOne {
   uint public required;
 
   enum WithdrawalState {
-    noWithdrawal,
-    withdrawalProposed,
-    withdrawalConfirmed
+    noProposal,
+    proposed,
+    confirmed
   }
 
   WithdrawalState public currentState;
@@ -30,7 +30,9 @@ contract StakeOne {
     address destination;
     uint amount;
     // in Wei
+
     uint numConfirm;
+    mapping (address => bool) confirmations;
   }
 
   Withdrawal[] public withdrawals;
@@ -61,12 +63,12 @@ contract StakeOne {
 
   // Sets owner of contract
   // Sets required number of confirmations for a withdrawal to be executed
-  // Sets currentState of withdrawal as noWithdrawal
+  // Sets currentState of withdrawal as noProposal
   function StakeOne() {
     owner = msg.sender;
     /*registerMember(_name, msg.sender);*/
     required = 0;
-    currentState = WithdrawalState.noWithdrawal;
+    currentState = WithdrawalState.noProposal;
   }
 
   // Registers/adds a member struct to the members array
@@ -129,7 +131,7 @@ contract StakeOne {
     // id, destination, amount, numConfirm
   // Only members can call this when the withdrawal state is proposed
   function getCurrentWithdrawal()
-    onlyState(WithdrawalState.withdrawalProposed)
+    onlyState(WithdrawalState.proposed)
     onlyMember(msg.sender)
     public
     constant
@@ -142,16 +144,17 @@ contract StakeOne {
       withdrawals[withdrawalID].destination,
       withdrawals[withdrawalID].amount
       withdrawals[withdrawalID].numConfirm
+      /*withdrawals[withdrawalID].confirmations*/
     );
   }
 
-  // Allows members to make a withdrawal proposal if noWithdrawal state
+  // Allows members to make a withdrawal proposal if noProposal state
   // Creates a newWithdrawal struct within memory, then
   // Adds newWithdrawal to withdrawals array
   // Changes withdrawal state to proposed
   // returns true upon successful proposition
   function makeWithdrawal(address _to, uint _amount)
-    onlyState(WithdrawalState.noWithdrawal)
+    onlyState(WithdrawalState.noProposal)
     onlyMember(msg.sender)
     returns(bool)
   {
@@ -164,29 +167,42 @@ contract StakeOne {
     /*newWithdrawal.source = msg.sender;*/
     newWithdrawal.destination = _to;
     newWithdrawal.amount = _amount;
-    newWithdrawal.numConfirm = 0;
+    newWithdrawal.confirmations[msg.sender] = true;
+    newWithdrawal.numConfirm = 1;
 
     withdrawals.push(newWithdrawal);
-    currentState = WithdrawalState.withdrawalProposed;
+    currentState = WithdrawalState.proposed;
 
     return true;
   }
 
   // Allows members to confirm a proposal if withdrawal state is proposed
   // Checks if member has already confirmed; rejects confirmation if true
-  // Later, checks if requirement is met; change state to confirmed if true 
-  function confirmTransaction()
-    onlyState(WithdrawalState.withdrawalProposed)
+  // Later, checks if requirement is met; change state to confirmed if true
+  function confirmWithdrawal()
+    onlyState(WithdrawalState.proposed)
     onlyMember(msg.sender)
     returns (bool)
   {
+    var withdrawal = withdrawals[withdrawals.length - 1];
 
-    // Get current withdrawal
+    if (withdrawal.confirmations[msg.sender] == true) {
+      throw;
+    }
+    else {
+      withdrawal.confirmations[msg.sender] = true;
+      withdrawal.numConfirm += 1;
+    }
 
-    // HOW TO CHECK MEMBER VOTED ON CURRENT WITHDRAWAL PROPOSAL ?
+    if (withdrawal.numConfirm >= required) {
+      currentState = WithdrawalState.confirmed
+    }
+  }
 
-    // Check if member has already confirmed, if so, don't count
-    // Check if required met, if so, change state
+  function executeWithdrawal() {
+    // only callable by members & when state == confirmed
+    // send money to destination w/ amount
+    // reset currentState
   }
 
   function kill() {
