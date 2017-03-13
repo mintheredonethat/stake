@@ -35,7 +35,7 @@ Initially, I looked at implementations of name registries & multi-sig wallets.
 Though I grasped some of the code, there were many concepts that flew over my head.
 Copying & pasting doesn't really help me learn.
 I decided to start small & build up the features I needed, increasing my working knowledge.
-I learned a lot throughout the process, and tried documenting my journey & code, though I'd often forget to.
+I learned a lot throughout the process and tried documenting my journey & code, though I'd often forget to.
 I hope novice smart contract & dapp developers can learn from this, as many of the contracts out there are either too basic or complex.
 Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible.
 
@@ -49,12 +49,15 @@ INSERT GIF OF USAGE
 
 RENAME REPO
 
+* StakeOne.sol
+* test/TestStakeOne.js
+
 ## Learn as Dev
 * `rm -rf build/`
 * `testrpc`
 * `truffle compile && truffle migrate && truffle console`
 * `npm run dev`
-* `truffle test ./test/multisig.js`
+* `truffle test ./test/JS_FILE`
 
 ## Learning Goals of Stake
 * Comfort with solidity & truffle
@@ -70,18 +73,20 @@ Contracts
 * Utility contract? For modifiers & common functions
 * Current implementation enables DoS attack by never reaching required confirmations
   * Timer?
-* Oraclise through Google Spreadsheets? Overkill?
 * Many recurrent withdrawals vs. using finite state machine to manage one?
+* Oraclise through Google Spreadsheets? Overkill?
 
 UI
+* Implement one... lol
+  * React?
 * Update table on successful registry
 * Aesthetics
 * Encourage users to use MetaMask
 
 Testing
-* Leverage events to debug & log testing process
-* Check if I'm CALLing at the correct places, not making TXs accidentally
 * Less nesting!!! PROMISES/returns & pudding?
+* Check if I'm CALLing at the correct places, not making TXs accidentally
+* Leverage events to debug & log testing process
 * Make use of beforeEach?
 * More usage of "contracts()" (truffle version of description)
 * http://truffleframework.com/docs/getting_started/javascript-tests
