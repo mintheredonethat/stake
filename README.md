@@ -21,6 +21,7 @@ INSERT GIF OF USAGE
 * Develop UI for contracts
 * Contract Testing
 * Interaction between many contracts (import, deploy)
+* Event Logging
 
 ## To Do
 
@@ -43,6 +44,7 @@ Testing
 * More usage of "contracts()" (truffle version of description)
 * http://truffleframework.com/docs/getting_started/javascript-tests
 * https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv
+* https://solidity.readthedocs.io/en/develop/contracts.html#events
 
 Script
 * Auto-sets accounts

@@ -79,7 +79,7 @@ contract("StakeOne", function(accounts) {
 
           .then(function(response) {
             assert.isAtLeast(response, web3.toWei(10), "Did not depositStake | getBalance");
-            return instance.makeWithdrawal(accounts[1], web3.toWei(5, 'ether'), {from: accounts[0]})
+            return instance.proposeWithdrawal(accounts[1], web3.toWei(5, 'ether'), {from: accounts[0]})
 
             .then(function() {
               return instance.currentState()

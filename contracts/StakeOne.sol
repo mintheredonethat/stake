@@ -3,39 +3,39 @@ pragma solidity ^0.4.7;
 contract StakeOne {
 
   address public owner;
+  uint public required;
 
+  mapping (address => bool) public isMember;
+  Member[] public members;
   struct Member {
     bytes32 name;
     address addr;
   }
 
-  Member[] public members;
-  /*mapping (Member => uint) public memberIndex;*/
-  /*mapping (address => Member) public memberAddresses;*/
-  mapping (address => bool) public isMember;
-
-  uint public required;
-
+  WithdrawalState public currentState;
   enum WithdrawalState {
     noProposal,
     proposed,
     confirmed
   }
 
-  WithdrawalState public currentState;
-
+  Withdrawal[] public withdrawals;
   struct Withdrawal {
     uint id;
-    /*address source;*/
     address destination;
-    uint amount;
-    // in Wei
-
+    uint amount; // in Wei
     uint numConfirm;
     mapping (address => bool) confirmations;
   }
 
-  Withdrawal[] public withdrawals;
+  // For EVM Logging Purposes (UI, testing)
+  event Registered(bytes32 indexed name, address indexed addr);
+  event RequirementChanged(uint indexed required);
+  event Deposited(address indexed sender, uint indexed value);
+  event Proposed(uint indexed id);
+  event Confirmed(address indexed confirmer);
+  event StateChanged(bytes32 indexed state);
+  event Executed(address indexed recipient, uint indexed value);
 
   // Fallback function
   function() payable {
@@ -45,6 +45,15 @@ contract StakeOne {
   // Modifiers
   modifier onlyMember(address _addr) {
     if (isMember[_addr]) {
+      _;
+    }
+    else {
+      throw;
+    }
+  }
+
+  modifier onlyOwner() {
+    if (msg.sender == owner) {
       _;
     }
     else {
@@ -66,16 +75,18 @@ contract StakeOne {
   // Sets currentState of withdrawal as noProposal
   function StakeOne() {
     owner = msg.sender;
-    /*registerMember(_name, msg.sender);*/
     required = 0;
     currentState = WithdrawalState.noProposal;
+
+    RequirementChanged(required);
+    StateChanged("no proposal");
   }
 
   // Registers/adds a member struct to the members array
   // Member struct consists of name & address
   // Sets mapping of address to true, describes if member is member
   // Increments the required confirmations
-  function registerMember(bytes32 _name, address _addr) {
+  function registerMember(bytes32 _name, address _addr) onlyOwner() {
     // only members should be able to register other members
     Member memory newMember;
 
@@ -85,6 +96,8 @@ contract StakeOne {
     members.push(newMember);
     isMember[_addr] = true;
     required += 1;
+
+    Registered(_name, _addr);
   }
 
   // Returns an array of: member names array & member addresses array
@@ -110,12 +123,14 @@ contract StakeOne {
   // Allows only members to change the confirmation requirement
   function changeRequirement(uint _required) onlyMember(msg.sender) {
     required = _required;
+    RequirementChanged(_required);
   }
 
   // Allows members to send tokens to this contract's balance
   function depositStake() payable onlyMember(msg.sender) returns(bool) {
     if (msg.value > 0) {
       return true;
+      Deposited(msg.sender, msg.value);
     }
     else {
       return false;
@@ -128,7 +143,7 @@ contract StakeOne {
   }
 
   // Returns an array containing the current withdrawal proposal's
-    // id, destination, amount, numConfirm
+  // id, destination, amount, numConfirm
   // Only members can call this when the withdrawal state is proposed
   function getCurrentWithdrawal()
     onlyState(WithdrawalState.proposed)
@@ -140,7 +155,6 @@ contract StakeOne {
     var withdrawalID = withdrawals.length - 1;
     return(
       withdrawals[withdrawalID].id,
-      /*withdrawals[withdrawalID].source,*/
       withdrawals[withdrawalID].destination,
       withdrawals[withdrawalID].amount
       withdrawals[withdrawalID].numConfirm
@@ -154,10 +168,9 @@ contract StakeOne {
   // Changes withdrawal state to proposed
   // returns true upon successful proposition
   // HOW TO UTILISE NORMAL payable TX FORMATION?
-  function makeWithdrawal(address _to, uint _amount)
+  function proposeWithdrawal(address _to, uint _amount)
     onlyState(WithdrawalState.noProposal)
     onlyMember(msg.sender)
-    returns(bool)
   {
     if (_amount > this.balance) {
       throw;
@@ -174,7 +187,8 @@ contract StakeOne {
     withdrawals.push(newWithdrawal);
     currentState = WithdrawalState.proposed;
 
-    return true;
+    Proposed(newWithdrawal.id);
+    StateChanged("proposed");
   }
 
   // Allows members to confirm a proposal if withdrawal state is proposed
@@ -183,7 +197,6 @@ contract StakeOne {
   function confirmWithdrawal()
     onlyState(WithdrawalState.proposed)
     onlyMember(msg.sender)
-    returns (bool)
   {
     var withdrawal = withdrawals[withdrawals.length - 1];
 
@@ -197,23 +210,31 @@ contract StakeOne {
 
     if (withdrawal.numConfirm >= required) {
       currentState = WithdrawalState.confirmed;
+      StateChanged("confirmed");
     }
 
-    return true;
+    Confirmed(msg.sender);
   }
 
+  // Allows members to execute the withdrawal if
+  // WithdrawalState.confirmed (received required number of confirmations)
+  // Changes state to noProposal
   function executeWithdrawal()
     onlyState(WithdrawalState.confirmed)
     onlyMember(msg.sender)
   {
     var w = withdrawals[withdrawals.length - 1];
 
-    if (!w.destination.call.gas(200000).value(w.amount)()) {
+    if (!w.destination.send(w.amount)) {
       throw;
     }
     currentState = WithdrawalState.noProposal;
+
+    Executed(w.destination, w.amount);
+    StateChanged("No proposal");
   }
 
+  // Selfdestruct contract
   function kill() {
     if (msg.sender == owner) {
       selfdestruct(owner);
