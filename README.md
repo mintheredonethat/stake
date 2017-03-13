@@ -63,6 +63,7 @@ Script
 * Deployment can take arguments, for contract constructors
 * Testing: return something, .then()
 * http://chaijs.com/api/assert/
+* Sending message from contract to EOA (send ether)
 
 
 
