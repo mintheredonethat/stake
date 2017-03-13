@@ -2,7 +2,7 @@
 
 Inception: 03.08.17
 
-Get things done with Stake - holds you & your team accountable to meeting your goals.
+Get things done with Stake - be accountable to achieving your goals.
 
 Developed via Truffle; leverages smart contracts:
 * Name registry
@@ -10,33 +10,41 @@ Developed via Truffle; leverages smart contracts:
 
 INSERT GIF OF USAGE
 
-## How To Run
-* `truffle compile` (one window)
-* `testrpc` (another window)
-* `truffle migrate`
+## Learn as Dev
+* `testrpc`
+* `truffle compile && truffle migrate && truffle console`
 * `npm run dev`
-* `truffle console` (another window)
+* `truffle test ./test/multisig.js`
 
 ## Learning Goals of Stake
 * Comfort with solidity & truffle
 * Develop UI for contracts
-* Implement tests for contracts
-* Multiple contracts' interacting with each other
+* Contract Testing
+* Interaction between many contracts (import, deploy)
+* Event Logging
 
 ## To Do
 
-Name Reg Contract
-* Add fallback
-* onlyOwner modifier?
+Contracts
+* Modularize, split up monolithic structure
+* Utility contract? For modifiers & common functions
+* Events
+* Current implementation enables DoS attack by never reaching required confirmations (timer)
 
 UI
-* Iterate over mapping to create table of addresses x names
 * Update table on successful registry
-* Leverage contract's emitted events
 * Aesthetics
+* Encourage users to use MetaMask
 
 Testing
-* Description, It, Asserts
+* Leverage events to debug & log testing process
+* Check if I'm CALLing at the correct places, not making TXs accidentally
+* Less nesting!!! PROMISES/returns & pudding?
+* Make use of beforeEach?
+* More usage of "contracts()" (truffle version of description)
+* http://truffleframework.com/docs/getting_started/javascript-tests
+* https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv
+* https://solidity.readthedocs.io/en/develop/contracts.html#events
 
 Script
 * Auto-sets accounts
@@ -53,28 +61,31 @@ Script
 * Running app within window.App & using window.web3
 * web3.toAscii(bytes32)
 * Deployment can take arguments, for contract constructors
+* Testing: return something, .then()
+* http://chaijs.com/api/assert/
+* Sending message from contract to EOA (send ether)
 
 
 
 # Ignore Below - Truffle Notes...
 
-### truffle-init-webpack
+#### truffle-init-webpack
 Example webpack project with Truffle. Includes contracts, migrations, tests, user interface and webpack build pipeline.
 
-#### Usage
+##### Usage
 
 To initialize a project with this exapmple, run `truffle init webpack` inside an empty directory.
 
-#### Building and the frontend
+##### Building and the frontend
 
 1. First run `truffle compile`, then run `truffle migrate` to deploy the contracts onto your network of choice (default "development").
 1. Then run `npm run dev` to build the app and serve it on http://localhost:8080
 
-#### Possible upgrades
+##### Possible upgrades
 
 * Use the webpack hotloader to sense when contracts or javascript have been recompiled and rebuild the application. Contributions welcome!
 
-#### Common Errors
+##### Common Errors
 
 * **Error: Can't resolve '../build/contracts/MetaCoin.json'**
 
