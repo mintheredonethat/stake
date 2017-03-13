@@ -75,52 +75,63 @@ contract("StakeOne", function(accounts) {
         return instance.depositStake({from: accounts[0], value: web3.toWei(10, 'ether')})
 
         .then(function() {
-          return instance.getBalance()
+          return instance.getBalance.call()
 
           .then(function(response) {
             assert.isAtLeast(response, web3.toWei(10), "Did not depositStake | getBalance");
+            return instance.makeWithdrawal(accounts[1], web3.toWei(5, 'ether'), {from: accounts[0]})
+
+            .then(function() {
+              return instance.currentState()
+
+              .then(function(currentState) {
+                assert.equal(currentState, 1, 'Current state not set')
+              })
+            })
           })
         })
       })
     })
   })
 
-  it("Should makeWithdrawal | currentState | getCurrentWithdrawal", function() {
-    return StakeOne.deployed()
-
-    .then(function(instance) {
-      var currentState;
-      // var transactionsCount;
-      return instance.makeWithdrawal(accounts[1], web3.toWei(5, 'ether'), {from: accounts[0]})
-
-      .then(function() {
-        var currentState;
-        return instance.currentState()
-
-        .then(function(response) {
-          var id, destination, amount, numConfirm;
-          currentState = response;
-
-          // currentState changes upon makeTransaction
-          assert.equal(currentState, 1, "currentState not set")
-          return instance.getCurrentWithdrawal({from: accounts[0]})
-
-          .then(function(response) {
-            id = response[0];
-            destination = response[1];
-            amount = response[2];
-            numConfirm = response[3];
-
-            // new TX, transactions[0], has the following properties
-            assert.equal(id, 0, "ID not set");
-            assert.equal(destination, accounts[1], "Destination not set");
-            assert.equal(amount, web3.toWei(5, 'ether'), "amount not set");
-            assert.equal(numConfirm, 0, "numConfirm not set");
-          })
-        })
-      })
-    })
-  })
+  // it("Should makeWithdrawal | currentState | getCurrentWithdrawal", function() {
+  //   return StakeOne.deployed()
+  //
+  //   .then(function(instance) {
+  //     return instance.makeWithdrawal(accounts[1], web3.toWei(5, 'ether'), {from: accounts[0]})
+  //
+  //     .then(function() {
+  //       return instance.currentState()
+  //
+  //       .then(function(currentState) {
+  //         var id, destination, amount, numConfirm;
+  //
+  //         // currentState changes upon makeTransaction
+  //         assert.equal(currentState, 1, "currentState not set")
+  //         return instance.getCurrentWithdrawal({from: accounts[0]})
+  //
+  //         .then(function(response) {
+  //           id = response[0];
+  //           destination = response[1];
+  //           amount = response[2];
+  //           numConfirm = response[3];
+  //
+  //           // new TX, transactions[0], has the following properties
+  //           assert.equal(id, 0, "ID not set");
+  //           assert.equal(destination, accounts[1], "Destination not set");
+  //           assert.equal(amount, web3.toWei(5, 'ether'), "amount not set");
+  //           assert.equal(numConfirm, 0, "numConfirm not set");
+  //
+  //           return instance.confirmWithdrawal()
+  //
+  //           .then(function() {
+  //
+  //           })
+  //         })
+  //       })
+  //     })
+  //   })
+  // })
 
   // it("Should confirmTransaction", function() {
   //   return StakeOne.deployed()

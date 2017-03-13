@@ -153,6 +153,7 @@ contract StakeOne {
   // Adds newWithdrawal to withdrawals array
   // Changes withdrawal state to proposed
   // returns true upon successful proposition
+  // HOW TO UTILISE NORMAL payable TX FORMATION?
   function makeWithdrawal(address _to, uint _amount)
     onlyState(WithdrawalState.noProposal)
     onlyMember(msg.sender)
@@ -167,8 +168,8 @@ contract StakeOne {
     /*newWithdrawal.source = msg.sender;*/
     newWithdrawal.destination = _to;
     newWithdrawal.amount = _amount;
-    newWithdrawal.confirmations[msg.sender] = true;
-    newWithdrawal.numConfirm = 1;
+    /*newWithdrawal.confirmations[msg.sender] = true;
+    newWithdrawal.numConfirm = 1;*/
 
     withdrawals.push(newWithdrawal);
     currentState = WithdrawalState.proposed;
@@ -195,14 +196,22 @@ contract StakeOne {
     }
 
     if (withdrawal.numConfirm >= required) {
-      currentState = WithdrawalState.confirmed
+      currentState = WithdrawalState.confirmed;
     }
+
+    return true;
   }
 
-  function executeWithdrawal() {
-    // only callable by members & when state == confirmed
-    // send money to destination w/ amount
-    // reset currentState
+  function executeWithdrawal()
+    onlyState(WithdrawalState.confirmed)
+    onlyMember(msg.sender)
+  {
+    var w = withdrawals[withdrawals.length - 1];
+
+    if (!w.destination.call.gas(200000).value(w.amount)()) {
+      throw;
+    }
+    currentState = WithdrawalState.noProposal;
   }
 
   function kill() {
