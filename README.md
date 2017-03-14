@@ -59,14 +59,16 @@ I realise my contract is quite monolithic & would like to improve it through mod
 
 I appreciate any feedback & contributions - thank you in advance.
 
-INSERT GIF OF USAGE
+## Immediate To-Do
+* INSERT GIF OF USAGE
+* Modularise w/ TDD
+* Front end UI
+* Test w/ promises
 
-RENAME REPO
-
+## Learn as Dev
 * contracts/StakeOne.sol
 * test/TestStakeOne.js
 
-## Learn as Dev
 * `rm -rf build/`
 * `testrpc`
 * `truffle compile && truffle migrate && truffle console`
@@ -83,15 +85,14 @@ RENAME REPO
 * Contract factory for different teams
 
 ## To Do
-
 Contracts
 * Modularise, split up monolithic structure
 * Encapsulation (coupling, private)
 * Utility contract? For modifiers & common functions
 * Current implementation enables DoS attack by never reaching required confirmations
-  * Timer?
+  * http://www.ethereum-alarm-clock.com/
 * Many recurrent withdrawals vs. using finite state machine to manage one?
-* Oraclise through Google Spreadsheets? Overkill?
+* Oraclise through Google Spreadsheets?
 
 UI
 * Implement one... lol
