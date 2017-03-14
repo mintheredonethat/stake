@@ -16,7 +16,7 @@ By "being in motion" as opposed to "taking action", I was no closer to achieving
 I sought out accountability buddies to make sure I would complete my tasks.
 We split our tasks into measurable units, so that we could track our progress & be fairly assessed by everyone in the group.
 Each week, we convene & discuss our goals for the week, as well as assess how the previous week had gone.
-In order to pass the week, you have to show measurable progress for each task (complete X units of Y).
+In order to pass the week, you have to show evidence of measurable progress for each task (complete X units of Y).
 If we did not meet our goals, we would be "punished" for not doing so.
 For example, I would place X ether in escrow.
 If I did not complete my tasks, I would not be able to recoup that ether.
@@ -33,23 +33,37 @@ Cheers, accountabili-buddies.
 My technical goal of this project was to learn more about Solidity & dapp development by "taking action".
 Initially, I looked at implementations of name registries & multi-sig wallets.
 Though I grasped some of the code, there were many concepts that flew over my head.
-Copying & pasting doesn't really help me learn.
+Copying & pasting doesn't really help me learn - I spiked some of their core concepts instead.
 I decided to start small & build up the features I needed, increasing my working knowledge.
 I learned a lot throughout the process and tried documenting my journey & code, though I'd often forget to.
-I hope novice smart contract & dapp developers can learn from this, as many of the contracts out there are either too basic or complex.
+I hope novice smart contract & dapp developers can learn from this, as many of the tutorials out there are either too basic or too complex.
 Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible.
 
 ## Current
 
 I implemented the foundations for a confirmation-based wallet that keeps track of users' addresses & names in a registry.
+
 I realise my contract is quite monolithic & would like to improve it through modularisation & gas optimisation.
+
+* Adding new features does not scale well
+* Separation of concerns (https://monax.io/docs/tutorials/solidity/solidity_1_the_five_types_model/):
+  * Database
+    * Storage on IPFS
+  * Controllers
+  * Contract Managing Contracts
+  * Application Logic (utilizes controllers)
+  * Utility
+* However, modularity comes at a price (https://monax.io/docs/tutorials/solidity/solidity_2_action_driven_architecture/)
+  * Indirection requires more calls & processing
+  * Action-driven Architecture
+
 I appreciate any feedback & contributions - thank you in advance.
 
 INSERT GIF OF USAGE
 
 RENAME REPO
 
-* StakeOne.sol
+* contracts/StakeOne.sol
 * test/TestStakeOne.js
 
 ## Learn as Dev
@@ -65,11 +79,14 @@ RENAME REPO
 * Contract Testing
 * Event Logging
 * Interaction between many contracts (import, deploy) - CMC/doug?
+  * https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/
+* Contract factory for different teams
 
 ## To Do
 
 Contracts
 * Modularise, split up monolithic structure
+* Encapsulation (coupling, private)
 * Utility contract? For modifiers & common functions
 * Current implementation enables DoS attack by never reaching required confirmations
   * Timer?
@@ -98,6 +115,7 @@ Scripting
   * var acct1 = web3.eth.accounts[0]
 * Send ETH to testnet address on MetaMask from local testrpc address
   * web3.eth.sendTransaction({ from: acct1, value: web3.toWei(20, 'ether'), to: MM_ADDRESS })
+  * Faucet
 
 ## Lessons Learned
 * Mapping pros & cons
