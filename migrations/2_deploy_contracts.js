@@ -1,5 +1,5 @@
-var NameRegistry = artifacts.require("./NameRegistry.sol");
-var MultiSig = artifacts.require("./MultiSig.sol");
+// var NameRegistry = artifacts.require("./NameRegistry.sol");
+// var MultiSig = artifacts.require("./MultiSig.sol");
 var StakeOne = artifacts.require("./StakeOne.sol");
 
 module.exports = function(deployer) {
