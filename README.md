@@ -65,6 +65,8 @@ I appreciate any feedback & contributions - thank you in advance.
 ## Immediate To-Do
 * INSERT GIF OF USAGE
 * Modularise w/ TDD
+  * 5 types model or action-driven architecture?
+  * import utility, set dependencies/deployment correctly
 * Front end UI
 * Test w/ promises
 
