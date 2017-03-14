@@ -25,7 +25,7 @@ It would instead be devoted to a team pot.
 One of my goals this past week was to learn dapp development for real.
 I wanted to build the basis to make my group accountability process easier.
 I thought that smart contracts would be a great way to do so.
-Today, I have finished the barebones implementation - I've met one of my goals for the week :)
+As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
 Cheers, accountabili-buddies.
 
 ## Overview
@@ -36,8 +36,11 @@ Though I grasped some of the code, there were many concepts that flew over my he
 Copying & pasting doesn't really help me learn - I spiked some of their core concepts instead.
 I decided to start small & build up the features I needed, increasing my working knowledge.
 I learned a lot throughout the process and tried documenting my journey & code, though I'd often forget to.
-I hope novice smart contract & dapp developers can learn from this, as many of the tutorials out there are either too basic or too complex.
-Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible.
+
+I hope novice smart contract & dapp developers can learn from this, as many of the tutorials out there are either too simplistic or too complex.
+Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible. 
+
+Here's to taking action & getting things done.
 
 ## Current
 
