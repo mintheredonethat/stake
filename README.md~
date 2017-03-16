@@ -1,6 +1,6 @@
 # Stake
 
-Inception: 03.08.2017
+Inception: 03.08.17
 
 Stake holds you and your team accountable to achieving your goals.
 
@@ -38,32 +38,9 @@ I decided to start small & build up the features I needed, increasing my working
 I learned a lot throughout the process and tried documenting my journey & code, though I'd often forget to.
 
 I hope novice smart contract & dapp developers can learn from this, as many of the tutorials out there are either too simplistic or too complex.
-Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible.
+Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible. 
 
 Here's to taking action & getting things done.
-
-## Learning Goals of Stake
-* Comfort with solidity & truffle
-* Develop UI for contracts
-* Contract Testing
-* Event Logging
-* Interaction between many contracts (import, deploy) - CMC/doug?
-  * https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/
-* Contract factory for different teams
-
-## Learn as Dev
-
-Contracts
-* contracts/StakeOne.sol
-* test/TestStakeOne.js
-
-Commands
-* `npm i`
-* `rm -rf build/`
-* `testrpc`
-* `truffle compile && truffle migrate && truffle console`
-* `npm run dev`
-* `truffle test ./test/JS_FILE`
 
 ## Current
 
@@ -92,6 +69,25 @@ I appreciate any feedback & contributions - thank you in advance.
   * import utility, set dependencies/deployment correctly
 * Front end UI
 * Test w/ promises
+
+## Learn as Dev
+* contracts/StakeOne.sol
+* test/TestStakeOne.js
+
+* `rm -rf build/`
+* `testrpc`
+* `truffle compile && truffle migrate && truffle console`
+* `npm run dev`
+* `truffle test ./test/JS_FILE`
+
+## Learning Goals of Stake
+* Comfort with solidity & truffle
+* Develop UI for contracts
+* Contract Testing
+* Event Logging
+* Interaction between many contracts (import, deploy) - CMC/doug?
+  * https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/
+* Contract factory for different teams
 
 ## To Do
 Contracts
@@ -126,14 +122,6 @@ Scripting
 * Send ETH to testnet address on MetaMask from local testrpc address
   * web3.eth.sendTransaction({ from: acct1, value: web3.toWei(20, 'ether'), to: MM_ADDRESS })
   * Faucet
-
-## 03.16.2017
-
-Tasks Completed
-* Updated gitignore & moved ignored files into ignored directory
-
-Learned
-* Git pull? Don't forget to `npm i`
 
 ## Lessons Learned
 * Mapping pros & cons
