@@ -12,33 +12,31 @@ Stake is developed through the Truffle framework, and leverages name registry an
 
 ## Motivation for Stake
 
-Self-awareness enlightened me to my subtle procrastination - I would learn a lot by digesting material, but never really applied what I learned.
-By "being in motion" as opposed to "taking action", I was no closer to achieving my goals than I was X days ago.
+Self-awareness enlightened me to my subtle form of procrastination - I would learn a lot by digesting material, but never really applied what I learned.
+By "being in motion" as opposed to "taking action" (http://jamesclear.com/taking-action), I was no closer to achieving my goals than I was X days ago.
 
 I sought out accountability buddies to make sure I would complete my tasks.
-We split our tasks into measurable units, so that we could track our progress & be fairly assessed by everyone in the group.
+Each person in the team deconstructed their goals into measurable, actionable units.
+This makes it easier to track progress & fairly assess other teammates.
 Each week, we convene & discuss our goals for the week, as well as assess how the previous week had gone.
-In order to pass the week, you have to show evidence of measurable progress for each task (complete X units of Y).
-If we did not meet our goals, we would be "punished" for not doing so.
+In order to pass the week, you have to show evidence of progress for each goal (complete X units of Y).
+If you did not meet your goals, you would be "punished" for not doing so.
 For example, I would place X ether in escrow.
-If I did not complete my tasks, I would not be able to recoup that ether.
-It would instead be devoted to a team pot.
+If I complete my tasks, I initiate a withdrawal process, where I can be refunded my ether if the rest of team confirms my progress & my withdrawal.
+If I did not complete my tasks, I would not be able to recoup that ether - my teammates would not consent to withdrawal; the ether would instead be devoted to a team pot.
 
-One of my goals this past week was to really learn dapp development.
-I wanted to build the basis to make my group accountability process easier.
-I thought that smart contracts would be a great way to do so.
-As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
-Cheers, accountabili-buddies.
-
-My technical goal of this project was to learn more about Solidity & dapp development by "taking action".
+One of my goals this past week (03.06.17 - 03.12.17) was to *really* learn solidity & dapp development by "taking action".
+I wanted to build the basis (with smart contracts) to make this group accountability process easier.
 Initially, I looked at implementations of name registries & multi-sig wallets.
 Though I grasped some of the code, there were many concepts that flew over my head.
 Copying & pasting doesn't really help me learn - I spiked some of their core concepts instead.
 I decided to start small & build up the features I needed, increasing my working knowledge.
-I learned a lot throughout the process and tried documenting my journey & code, though I'd often forget to.
+As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
+Cheers, accountabili-buddies.
 
-I hope novice smart contract & dapp developers can learn from this, as many of the tutorials out there are either too simplistic or too complex.
-Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible.
+I learned a lot throughout the process and tried documenting my process & code, though I'd often forget to...
+I hope novice smart contract & dapp developers can learn from this repo, as many of the tutorials out there are either too simplistic or too complex.
+Additionally, I hope people will use this platform (once complete) to achieve their goals & realise a potential previously deemed inaccessible.
 
 Here's to taking action, getting things done, and raising the bar.
 
