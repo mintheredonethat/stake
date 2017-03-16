@@ -1,14 +1,16 @@
 # Stake
 
-Inception: 03.08.2017
+Inception: 03.08.17
 
 Stake holds you and your team accountable to achieving your goals.
 
 By placing a stake into a contract, the only way to recoup your ether is to meet your goals & have your teammates validate your progress.
 
-Stake was developed through the Truffle framework, leveraging name registry and multi-signature capabilities via smart contract.
+Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
 
-## Story
++++ INSERT GIF OF USAGE +++
+
+## Motivation for Stake
 
 Self-awareness enlightened me to my subtle procrastination - I would learn a lot by digesting material, but never really applied what I learned.
 By "being in motion" as opposed to "taking action", I was no closer to achieving my goals than I was X days ago.
@@ -28,8 +30,6 @@ I thought that smart contracts would be a great way to do so.
 As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
 Cheers, accountabili-buddies.
 
-## Overview
-
 My technical goal of this project was to learn more about Solidity & dapp development by "taking action".
 Initially, I looked at implementations of name registries & multi-sig wallets.
 Though I grasped some of the code, there were many concepts that flew over my head.
@@ -40,9 +40,10 @@ I learned a lot throughout the process and tried documenting my journey & code, 
 I hope novice smart contract & dapp developers can learn from this, as many of the tutorials out there are either too simplistic or too complex.
 Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible.
 
-Here's to taking action & getting things done.
+Here's to taking action, getting things done, and raising the bar.
 
 ## Learning Goals of Stake
+
 * Comfort with solidity & truffle
 * Develop UI for contracts
 * Contract Testing
@@ -59,26 +60,20 @@ Contracts
 
 Commands
 * `npm i`
-* `rm -rf build/`
 * `testrpc`
-* `truffle compile && truffle migrate && truffle console`
+* `rm -rf build/ && truffle compile && truffle migrate && truffle console`
 * `npm run dev`
 * `truffle test ./test/JS_FILE`
 
 I appreciate any feedback & contributions - thank you in advance.
 
-## Immediate To-Do
-* INSERT GIF OF USAGE
+## To Do
+
+Contracts
 * Break up monolith contract & modularise w/ TDD (avoid callback hell w/ promises)
   * 5 types model or action-driven architecture?
   * import utility, set dependencies/deployment correctly
-* Front end UI
-
-## To Do
-Contracts
-* Modularise, split up monolithic structure
 * Encapsulation (coupling, private)
-* Utility contract? For modifiers & common functions
 * Current implementation enables DoS attack by never reaching required confirmations
   * http://www.ethereum-alarm-clock.com/
 * Many recurrent withdrawals vs. using finite state machine to manage one?
@@ -87,12 +82,13 @@ Contracts
 UI
 * Implement one... lol
   * React?
+* Authenticate via MetaMask
 * Update table on successful registry
+* Show currentWithdrawal
 * Aesthetics
-* Encourage users to use MetaMask
 
 Testing
-* Less nesting!!! PROMISES/returns & pudding?
+* Less nesting & callback hell!!! PROMISES/returns & pudding?
 * Check if I'm CALLing at the correct places, not making TXs accidentally
 * Leverage events to debug & log testing process
 * Make use of beforeEach?
@@ -108,7 +104,7 @@ Scripting
   * web3.eth.sendTransaction({ from: acct1, value: web3.toWei(20, 'ether'), to: MM_ADDRESS })
   * Faucet
 
-## 03.16.2017
+## 03.16.17
 
 Tasks Completed
 * Updated gitignore & moved ignored files into ignored directory
@@ -116,13 +112,15 @@ Tasks Completed
 
 Learned
 * Git pull? Don't forget to `npm i` *facepalm*
-* Import &  is _
+* Inheritance
+  * Import "path_to_file"
+  * contract A is B {}
 
 Questions
-* In StakeOne.sol, I import & state StakeOne is
+* In StakeOne.sol, I import from Mortal & state StakeOne is Mortal
   * When migrating StakeOne.sol, does truffle know to automatically include Mortal.sol?
 
-## Lessons Learned
+## Lessons Learned (Before 03.16.17)
 * Mapping pros & cons
   * KV store
   * Can't iterate easily
