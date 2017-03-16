@@ -34,8 +34,8 @@ I decided to start small & build up the features I needed, increasing my working
 As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
 Cheers, accountabili-buddies.
 
-I learned a lot throughout the process and tried documenting my process & code, though I'd often forget to...
-I hope novice smart contract & dapp developers can learn from this repo, as many of the tutorials out there are either too simplistic or too complex.
+I learned a lot throughout this journey and tried regularly documenting my process & code.
+I hope novice smart contract & dapp developers can learn from this repo, as many of the tutorials out there were for me either too simplistic or too complex.
 Additionally, I hope people will use this platform (once complete) to achieve their goals & realise a potential previously deemed inaccessible.
 
 Here's to taking action, getting things done, and raising the bar.
