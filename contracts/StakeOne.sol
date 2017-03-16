@@ -1,8 +1,8 @@
 pragma solidity ^0.4.7;
+import "./Mortal.sol";
 
-contract StakeOne {
+contract StakeOne is Mortal {
 
-  address public owner;
   uint public required;
 
   mapping (address => bool) public isMember;
@@ -45,15 +45,6 @@ contract StakeOne {
   // Modifiers
   modifier onlyMember(address _addr) {
     if (isMember[_addr]) {
-      _;
-    }
-    else {
-      throw;
-    }
-  }
-
-  modifier onlyOwner() {
-    if (msg.sender == owner) {
       _;
     }
     else {
@@ -232,13 +223,6 @@ contract StakeOne {
 
     Executed(w.destination, w.amount);
     StateChanged("No proposal");
-  }
-
-  // Selfdestruct contract
-  function kill() {
-    if (msg.sender == owner) {
-      selfdestruct(owner);
-    }
   }
 
 }

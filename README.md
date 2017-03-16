@@ -22,7 +22,7 @@ For example, I would place X ether in escrow.
 If I did not complete my tasks, I would not be able to recoup that ether.
 It would instead be devoted to a team pot.
 
-One of my goals this past week was to learn dapp development for real.
+One of my goals this past week was to really learn dapp development.
 I wanted to build the basis to make my group accountability process easier.
 I thought that smart contracts would be a great way to do so.
 As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
@@ -65,33 +65,14 @@ Commands
 * `npm run dev`
 * `truffle test ./test/JS_FILE`
 
-## Current
-
-I implemented the foundations for a confirmation-based wallet that keeps track of users' addresses & names in a registry.
-
-I realise my contract is quite monolithic & would like to improve it through modularisation & gas optimisation.
-
-* Adding new features does not scale well
-* Separation of concerns (https://monax.io/docs/tutorials/solidity/solidity_1_the_five_types_model/):
-  * Database
-    * Storage on IPFS
-  * Controllers
-  * Contract Managing Contracts
-  * Application Logic (utilizes controllers)
-  * Utility
-* However, modularity comes at a price (https://monax.io/docs/tutorials/solidity/solidity_2_action_driven_architecture/)
-  * Indirection requires more calls & processing
-  * Action-driven Architecture
-
 I appreciate any feedback & contributions - thank you in advance.
 
 ## Immediate To-Do
 * INSERT GIF OF USAGE
-* Modularise w/ TDD
+* Break up monolith contract & modularise w/ TDD (avoid callback hell w/ promises)
   * 5 types model or action-driven architecture?
   * import utility, set dependencies/deployment correctly
 * Front end UI
-* Test w/ promises
 
 ## To Do
 Contracts
@@ -131,9 +112,15 @@ Scripting
 
 Tasks Completed
 * Updated gitignore & moved ignored files into ignored directory
+* Leverage inheritance to make StakeOne contract Mortal (owned, onlyOwner, kill)
 
 Learned
-* Git pull? Don't forget to `npm i`
+* Git pull? Don't forget to `npm i` *facepalm*
+* Import &  is _
+
+Questions
+* In StakeOne.sol, I import & state StakeOne is
+  * When migrating StakeOne.sol, does truffle know to automatically include Mortal.sol?
 
 ## Lessons Learned
 * Mapping pros & cons
