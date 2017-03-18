@@ -54,13 +54,17 @@ Here's to taking action, getting things done, and raising the bar.
 
 Contracts
 * contracts/StakeOne.sol
+  * StakeOne, registerMember, getMembers, changeRequirement, depositStake, getBalance, getCurrentWithdrawal, proposeWithdrawal, confirmWithdrawal, executeWithdrawal
 * test/TestStakeOne.js
 
-Commands
+Run
 * `npm i`
 * `testrpc`
 * `rm -rf build/ && truffle compile && truffle migrate && truffle console`
 * `npm run dev`
+
+Test
+* `testrpc`
 * `truffle test ./test/JS_FILE`
 
 I appreciate any feedback & contributions - thank you in advance.
@@ -107,9 +111,15 @@ Tasks Completed
   * Sends Ether to MM address (hardcoded)
   * Registers MM address (hardcoded) from testrpc accounts[0] (owner)
   * [Truffle Docs: Deployment](http://truffleframework.com/docs/getting_started/migrations#deployer-deploy-contract-args-options-)
+* Update testing, use promises
 
 Learned
 * How to customise deployment using promises
+* How to test using promises (returns; no callback hell/nesting)
+
+Questions
+* When running tests, do the contracts get compiled & migrated, as per instructions dictated in the deployment?
+* How to leverage events in testing? Where does the event logging show up in `truffle test`?
 
 To Do
 * Show currentWithdrawal at top of UI
@@ -127,17 +137,13 @@ Learned
 * Inheritance
   * Import "path_to_file"
   * contract A is B {}
-
-Questions
-* In StakeOne.sol, I import from Mortal & state StakeOne is Mortal
-  * When migrating StakeOne.sol, does truffle know to automatically include Mortal.sol?
-    * Yes, it does.
+  * When migrating A, Truffle knows to automatically include B
 
 To Do
 * Split into NameReg & MultiSig, but ensure compatibility
-* Callback Hell (Tests)
+* Callback Hell (Tests) --- _Updated 03.18.17_
 * Pre & post modifiers
-  * Test contract
+  * A test contract (.sol)
 * Encapsulations (private/public)
 
 ## Lessons Learned (Before 03.16.17)
@@ -154,7 +160,7 @@ To Do
   * [Chai JS Tests](http://chaijs.com/api/assert/)
   * TDD should guide & verify development
   * Use console for quick checks
-* Sending message from contract to EOA (send ether)
+* Sending message (not TX) from contract to EOA (send ether)
 * Monolith arises quickly
   * Learn to modularize contracts
   * Design before implementation - in this case, I wanted to learn by doing, was not focused on scalability
