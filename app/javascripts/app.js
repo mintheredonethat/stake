@@ -3,13 +3,13 @@ import "../stylesheets/app.css";
 
 // Import libraries we need.
 import { default as Web3 } from 'web3';
-import { default as contract } from 'truffle-contract'
+import { default as contract } from 'truffle-contract';
 
 // Import our contract artifacts and turn them into usable abstractions.
-import namereg_artifacts from '../../build/contracts/NameRegistry.json'
+import stakeOne_artifacts from '../../build/contracts/StakeOne.json';
 
 // NameRegistry is our usable abstraction, which we'll use through the code below.
-var NameRegistry = contract(namereg_artifacts);
+var StakeOne = contract(stakeOne_artifacts);
 
 // The following code is simple to show off interacting with your contracts.
 // As your needs grow you will likely need to change its form and structure.
@@ -22,7 +22,8 @@ window.App = {
     var self = this;
 
     // Bootstrap the MetaCoin abstraction for Use.
-    NameRegistry.setProvider(web3.currentProvider);
+    // NameRegistry.setProvider(web3.currentProvider);
+    StakeOne.setProvider(web3.currentProvider);
 
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function(err, accs) {
@@ -47,21 +48,29 @@ window.App = {
     status.innerHTML = message;
   },
 
-  // Have to figure out how to iterate over a mapping
-  //
-  // refreshRegistry: function() {
-  //   var self = this;
-  //
-  //   NameRegistry.deployed().then(function(instance) {
-  //     return instance.addresses().length;
-  //   }).then(function(response) {
-  //     var length = document.getElementById("registry-length");
-  //     length.innerHTML = response;
-  //   }).catch(function(e) {
-  //     console.log(e);
-  //     self.setStatus("Error: see log");
-  //   })
-  // },
+  getMembers: function() {
+    var self = this;
+    this.setStatus("Getting all members");
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      return instance.getMembers()
+    })
+    .then(function(data) {
+      var names = String(data[0]).split(',');
+      var addresses = String(data[1]).split(',');
+      var tableRows = [];
+
+      for (var i = 0; i < names.length; i++) {
+        tableRows.push(web3.toAscii(names[i]));
+        tableRows.push(addresses[i]);
+      }
+
+      self.setStatus(
+        tableRows
+      );
+    })
+  },
 
   register: function() {
     var self = this;
@@ -70,11 +79,14 @@ window.App = {
 
     this.setStatus("Registering Name/Address Pair...");
 
-    NameRegistry.deployed().then(function(instance) {
-      return instance.register(name, address, {from: account});
-    }).then(function() {
+    StakeOne.deployed()
+    .then(function(instance) {
+      return instance.registerMember(name, address, {from: account});
+    })
+    .then(function() {
       self.setStatus("Registration Complete");
-    }).catch(function(e) {
+    })
+    .catch(function(e) {
       console.log(e);
       self.setStatus("Error: Check Log");
     })
@@ -92,71 +104,6 @@ window.App = {
     //   self.setStatus('Error logged');
     // })
   },
-
-  // getAll: function() {
-  //   var self = this;
-  //   var count = 0;
-  //
-  //   NameRegistry.deployed().then(function(instance) {
-  //     count = instance.getUserCount({ from: account });
-  //   }).then(function() {
-  //     console.log(count);
-  //
-  //     for (var i = 0; i < count; i++) {
-  //       var userAddr;
-  //       instance.getUserAtIndex(i, {from: account}).then(function(r) {
-  //         var userAddr = r;
-  //         console.log(userAddr);
-  //       })
-  //     }
-  //   })
-  //   //
-  //   //
-  //   //   console.log(count);
-  //   //   for (var i = 0; i < count; i++) {
-  //   //     var userAddr = instance.getUserAtIndex(i, {from: account} );
-  //   //     console.log(userAddr);
-  //   //     var userDetails = instance.getUser( {from: account} );
-  //   //     console.log(userDetails);
-  //   //   }
-  //   //   self.setStatus('Fetched; check log');
-  //   // }).catch(function(e) {
-  //   //   console.log(e);
-  //   //   self.setStatus("error logged")
-  //   // })
-  // },
-
-  getAddress: function() {
-    var self = this;
-    var registeredName = document.getElementById("registeredName").value;
-
-    this.setStatus("Fetching Address...");
-
-    NameRegistry.deployed().then(function(instance) {
-      return instance.addressOf(registeredName);
-    }).then(function(r) {
-      self.setStatus(r);
-    }).catch(function(e) {
-      console.log(e);
-      self.setStatus("Error: Check Log");
-    })
-  },
-
-  getName: function() {
-    var self = this;
-    var registeredAddress = document.getElementById("registeredAddress").value;
-
-    this.setStatus("Fetching Name...");
-
-    NameRegistry.deployed().then(function(instance) {
-      return instance.nameOf(registeredAddress);
-    }).then(function(r) {
-      self.setStatus(web3.toAscii(r));
-    }).catch(function(e) {
-      console.log(e);
-      self.setStatus("Error: Check Log");
-    })
-  }
 };
 
 window.addEventListener('load', function() {
