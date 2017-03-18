@@ -17,7 +17,7 @@ module.exports = function(deployer) {
     return StakeOne.deployed();
   })
   .then(function(instance) {
-    instance.registerMember("satoshi", "0xfd2938c85530DdA11Bb9eFd08B12283d62664764")
+    instance.registerMember("Satoshi", "0xfd2938c85530DdA11Bb9eFd08B12283d62664764")
     return instance;
   })
   .then(function(instance) {

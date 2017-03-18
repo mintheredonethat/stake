@@ -107,9 +107,14 @@ Tasks Completed
   * Sends Ether to MM address (hardcoded)
   * Registers MM address (hardcoded) from testrpc accounts[0] (owner)
   * [Truffle Docs: Deployment](http://truffleframework.com/docs/getting_started/migrations#deployer-deploy-contract-args-options-)
+* Update testing, use promises (no callback hell/nesting)
 
 Learned
 * How to customise deployment using promises
+* How to test using promises (no callback hell/nesting)
+
+Questions
+* When running tests, do the contracts get compiled & migrated, as per instructions dictated in the deployment?
 
 To Do
 * Show currentWithdrawal at top of UI
@@ -127,11 +132,7 @@ Learned
 * Inheritance
   * Import "path_to_file"
   * contract A is B {}
-
-Questions
-* In StakeOne.sol, I import from Mortal & state StakeOne is Mortal
-  * When migrating StakeOne.sol, does truffle know to automatically include Mortal.sol?
-    * Yes, it does.
+  * When migrating A, Truffle knows to automatically include B
 
 To Do
 * Split into NameReg & MultiSig, but ensure compatibility
