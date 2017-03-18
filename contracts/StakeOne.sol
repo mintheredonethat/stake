@@ -133,13 +133,15 @@ contract StakeOne is Mortal {
   }
 
   // Allows only members to change the confirmation requirement
-  function changeRequirement(uint _required) onlyMember(msg.sender) {
+  function changeRequirement(uint _required)
+  onlyMember(msg.sender) {
     required = _required;
     RequirementChanged(_required);
   }
 
   // Allows members to send tokens to this contract's balance
-  function depositStake() payable onlyMember(msg.sender) {
+  function depositStake() payable
+  onlyMember(msg.sender) {
     if (msg.value > 0) {
       Deposited(msg.sender, msg.value);
     }
@@ -154,10 +156,10 @@ contract StakeOne is Mortal {
   // id, destination, amount, numConfirm
   // Only members can call this when the withdrawal state is proposed
   function getCurrentWithdrawal()
-    onlyState(WithdrawalState.proposed)
-    onlyMember(msg.sender)
-    constant
-    returns(uint, address, uint, uint)
+  /*onlyState(WithdrawalState.proposed)*/
+  /*onlyMember(msg.sender)*/
+  constant
+  returns(uint, address, uint, uint)
   {
     var withdrawalID = withdrawals.length - 1;
     return(
@@ -175,9 +177,10 @@ contract StakeOne is Mortal {
   // Changes withdrawal state to proposed
   // returns true upon successful proposition
   // HOW TO UTILISE NORMAL payable TX FORMATION?
+  // HOW TO CHECK AGAINST _to ADDRESS' PREVIOUS DEPOSIT (FOR AMOUNT)
   function proposeWithdrawal(address _to, uint _amount)
-    onlyState(WithdrawalState.noProposal)
-    onlyMember(msg.sender)
+  onlyState(WithdrawalState.noProposal)
+  onlyMember(msg.sender)
   {
     if (_amount > this.balance) {
       throw;
@@ -202,8 +205,8 @@ contract StakeOne is Mortal {
   // Checks if member has already confirmed; rejects confirmation if true
   // Later, checks if requirement is met; change state to confirmed if true
   function confirmWithdrawal()
-    onlyState(WithdrawalState.proposed)
-    onlyMember(msg.sender)
+  onlyState(WithdrawalState.proposed)
+  onlyMember(msg.sender)
   {
     var withdrawal = withdrawals[withdrawals.length - 1];
 
@@ -227,8 +230,8 @@ contract StakeOne is Mortal {
   // WithdrawalState.confirmed (received required number of confirmations)
   // Changes state to noProposal
   function executeWithdrawal()
-    onlyState(WithdrawalState.confirmed)
-    onlyMember(msg.sender)
+  onlyState(WithdrawalState.confirmed)
+  onlyMember(msg.sender)
   {
     var w = withdrawals[withdrawals.length - 1];
 

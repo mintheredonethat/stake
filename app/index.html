@@ -7,6 +7,40 @@
 </head>
 <body>
   <h1>Stake</h1>
+  <h3>Balance (in Ether): <span id="balance"></span></h3>
+  <h3>Current Withdrawal: <span id="current-withdrawal"></span></h3>
+  <h3>Confirmations: <span id="num-confirm"></span> / <span id="required"></span></h3>
+
+  <h1>Deposit</h1>
+
+  <br>
+  <h3>Deposit Stake</h3>
+  <br><label for="deposit">Deposit:</label><input type="text" id="deposit" placeholder="Stake in Ether - E.g., 10"></input>
+  <br><br><button id="deposit" onClick="App.depositStake()">Deposit Stake</button>
+
+  <br><br>
+
+  <h1>Withdrawals</h1>
+
+  <!-- Should not be clickable, depending on finite state machine -->
+  <h3>Propose Withdrawal</h3>
+  <br>
+  <label for="recipient">Recipient:</label><input type="text" id="recipient" placeholder="0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+  <label for="amount">Amount:</label><input type="text" id="amount" placeholder="In Ether - E.g., 10"></input>
+  <br><button id="propose" onClick="App.proposeWithdrawal()">Propose Withdrawal</button>
+
+
+  <!-- Should not be clickable, depending on finite state machine -->
+  <h3>Confirm Withdrawal</h3>
+  <br><button id="confirm" onClick="App.confirmWithdrawal()">Confirm Withdrawal</button>
+
+  <!-- Should not be clickable, depending on finite state machine -->
+  <h3>Execute Withdrawal</h3>
+  <br><button id="execute" onClick="App.executeWithdrawal()">Execute Withdrawal</button>
+
+  <br><br>
+
+  <h1>Registry</h1>
 
   <br>
   <h2>Register a Name/Address Pair</h2>
