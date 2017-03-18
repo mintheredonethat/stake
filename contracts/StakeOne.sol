@@ -3,23 +3,31 @@ import "./Mortal.sol";
 
 contract StakeOne is Mortal {
 
+  // Confirmations required for functions
   uint public required;
 
+  // Member
   mapping (address => bool) public isMember;
+
   Member[] public members;
+
   struct Member {
     bytes32 name;
     address addr;
   }
 
+  // WithdrawalState finite state machine
   WithdrawalState public currentState;
+
   enum WithdrawalState {
     noProposal,
     proposed,
     confirmed
   }
 
+  // Withdrawal
   Withdrawal[] public withdrawals;
+
   struct Withdrawal {
     uint id;
     address destination;
@@ -28,7 +36,7 @@ contract StakeOne is Mortal {
     mapping (address => bool) confirmations;
   }
 
-  // For EVM Logging Purposes (UI, testing)
+  // Events for EVM Logging Purposes (UI, testing)
   event Registered(bytes32 indexed name, address indexed addr);
   event RequirementChanged(uint indexed required);
   event Deposited(address indexed sender, uint indexed value);
@@ -52,6 +60,18 @@ contract StakeOne is Mortal {
     }
   }
 
+  modifier memberOrOwner(address _addr) {
+    if (_addr == owner) {
+      _;
+    }
+    else if (isMember[_addr]) {
+      _;
+    }
+    else {
+      throw;
+    }
+  }
+
   modifier onlyState(WithdrawalState expectedState) {
     if (expectedState == currentState) {
       _;
@@ -67,9 +87,8 @@ contract StakeOne is Mortal {
   function StakeOne() {
     owner = msg.sender;
     required = 0;
-    currentState = WithdrawalState.noProposal;
 
-    RequirementChanged(required);
+    currentState = WithdrawalState.noProposal;
     StateChanged("no proposal");
   }
 
@@ -77,7 +96,8 @@ contract StakeOne is Mortal {
   // Member struct consists of name & address
   // Sets mapping of address to true, describes if member is member
   // Increments the required confirmations
-  function registerMember(bytes32 _name, address _addr) onlyOwner() {
+  function registerMember(bytes32 _name, address _addr)
+  memberOrOwner(msg.sender) {
     // only members should be able to register other members
     Member memory newMember;
 
@@ -89,6 +109,7 @@ contract StakeOne is Mortal {
     required += 1;
 
     Registered(_name, _addr);
+    RequirementChanged(required);
   }
 
   // Returns an array of: member names array & member addresses array
@@ -118,13 +139,9 @@ contract StakeOne is Mortal {
   }
 
   // Allows members to send tokens to this contract's balance
-  function depositStake() payable onlyMember(msg.sender) returns(bool) {
+  function depositStake() payable onlyMember(msg.sender) {
     if (msg.value > 0) {
-      return true;
       Deposited(msg.sender, msg.value);
-    }
-    else {
-      return false;
     }
   }
 
@@ -139,7 +156,6 @@ contract StakeOne is Mortal {
   function getCurrentWithdrawal()
     onlyState(WithdrawalState.proposed)
     onlyMember(msg.sender)
-    public
     constant
     returns(uint, address, uint, uint)
   {
@@ -216,6 +232,7 @@ contract StakeOne is Mortal {
   {
     var w = withdrawals[withdrawals.length - 1];
 
+    // Is this safe? DAO Hack
     if (!w.destination.send(w.amount)) {
       throw;
     }

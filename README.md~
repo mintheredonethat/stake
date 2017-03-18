@@ -6,81 +6,42 @@ Stake holds you and your team accountable to achieving your goals.
 
 By placing a stake into a contract, the only way to recoup your ether is to meet your goals & have your teammates validate your progress.
 
-Stake was developed through the Truffle framework, leveraging name registry and multi-signature capabilities via smart contract.
+Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
 
-## Story
++++ INSERT GIF OF USAGE +++
 
-Self-awareness enlightened me to my subtle procrastination - I would learn a lot by digesting material, but never really applied what I learned.
-By "being in motion" as opposed to "taking action", I was no closer to achieving my goals than I was X days ago.
+## Motivation for Stake
+
+Self-awareness enlightened me to my subtle form of procrastination - I would learn a lot by digesting material, but never really applied what I learned.
+By "being in motion" as opposed to "taking action" (http://jamesclear.com/taking-action), I was no closer to achieving my goals than I was X days ago.
 
 I sought out accountability buddies to make sure I would complete my tasks.
-We split our tasks into measurable units, so that we could track our progress & be fairly assessed by everyone in the group.
+Each person in the team deconstructed their goals into measurable, actionable units.
+This makes it easier to track progress & fairly assess other teammates.
 Each week, we convene & discuss our goals for the week, as well as assess how the previous week had gone.
-In order to pass the week, you have to show evidence of measurable progress for each task (complete X units of Y).
-If we did not meet our goals, we would be "punished" for not doing so.
+In order to pass the week, you have to show evidence of progress for each goal (complete X units of Y).
+If you did not meet your goals, you would be "punished" for not doing so.
 For example, I would place X ether in escrow.
-If I did not complete my tasks, I would not be able to recoup that ether.
-It would instead be devoted to a team pot.
+If I complete my tasks, I initiate a withdrawal process, where I can be refunded my ether if the rest of team confirms my progress & my withdrawal.
+If I did not complete my tasks, I would not be able to recoup that ether - my teammates would not consent to withdrawal; the ether would instead be devoted to a team pot.
 
-One of my goals this past week was to learn dapp development for real.
-I wanted to build the basis to make my group accountability process easier.
-I thought that smart contracts would be a great way to do so.
-As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
-Cheers, accountabili-buddies.
-
-## Overview
-
-My technical goal of this project was to learn more about Solidity & dapp development by "taking action".
+One of my goals this past week (03.06.17 - 03.12.17) was to *really* learn solidity & dapp development by "taking action".
+I wanted to build the basis (with smart contracts) to make this group accountability process easier.
 Initially, I looked at implementations of name registries & multi-sig wallets.
 Though I grasped some of the code, there were many concepts that flew over my head.
 Copying & pasting doesn't really help me learn - I spiked some of their core concepts instead.
 I decided to start small & build up the features I needed, increasing my working knowledge.
-I learned a lot throughout the process and tried documenting my journey & code, though I'd often forget to.
+As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
+Cheers, accountabili-buddies.
 
-I hope novice smart contract & dapp developers can learn from this, as many of the tutorials out there are either too simplistic or too complex.
-Additionally, I hope people will use this platform to achieve their goals & realise a potential previously deemed inaccessible. 
+I learned a lot throughout this journey and tried regularly documenting my process & code.
+I hope novice smart contract & dapp developers can learn from this repo, as many of the tutorials out there were for me either too simplistic or too complex.
+Additionally, I hope people will use this platform (once complete) to achieve their goals & realise a potential previously deemed inaccessible.
 
-Here's to taking action & getting things done.
-
-## Current
-
-I implemented the foundations for a confirmation-based wallet that keeps track of users' addresses & names in a registry.
-
-I realise my contract is quite monolithic & would like to improve it through modularisation & gas optimisation.
-
-* Adding new features does not scale well
-* Separation of concerns (https://monax.io/docs/tutorials/solidity/solidity_1_the_five_types_model/):
-  * Database
-    * Storage on IPFS
-  * Controllers
-  * Contract Managing Contracts
-  * Application Logic (utilizes controllers)
-  * Utility
-* However, modularity comes at a price (https://monax.io/docs/tutorials/solidity/solidity_2_action_driven_architecture/)
-  * Indirection requires more calls & processing
-  * Action-driven Architecture
-
-I appreciate any feedback & contributions - thank you in advance.
-
-## Immediate To-Do
-* INSERT GIF OF USAGE
-* Modularise w/ TDD
-  * 5 types model or action-driven architecture?
-  * import utility, set dependencies/deployment correctly
-* Front end UI
-* Test w/ promises
-
-## Learn as Dev
-* contracts/StakeOne.sol
-* test/TestStakeOne.js
-
-* `rm -rf build/`
-* `testrpc`
-* `truffle compile && truffle migrate && truffle console`
-* `npm run dev`
-* `truffle test ./test/JS_FILE`
+Here's to taking action, getting things done, and raising the bar.
 
 ## Learning Goals of Stake
+
 * Comfort with solidity & truffle
 * Develop UI for contracts
 * Contract Testing
@@ -89,11 +50,28 @@ I appreciate any feedback & contributions - thank you in advance.
   * https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/
 * Contract factory for different teams
 
-## To Do
+## Learn as Dev
+
 Contracts
-* Modularise, split up monolithic structure
+* contracts/StakeOne.sol
+* test/TestStakeOne.js
+
+Commands
+* `npm i`
+* `testrpc`
+* `rm -rf build/ && truffle compile && truffle migrate && truffle console`
+* `npm run dev`
+* `truffle test ./test/JS_FILE`
+
+I appreciate any feedback & contributions - thank you in advance.
+
+## To Do
+
+Contracts
+* Break up monolith contract & modularise w/ TDD (avoid callback hell w/ promises)
+  * 5 types model or action-driven architecture?
+  * import utility, set dependencies/deployment correctly
 * Encapsulation (coupling, private)
-* Utility contract? For modifiers & common functions
 * Current implementation enables DoS attack by never reaching required confirmations
   * http://www.ethereum-alarm-clock.com/
 * Many recurrent withdrawals vs. using finite state machine to manage one?
@@ -102,12 +80,13 @@ Contracts
 UI
 * Implement one... lol
   * React?
+* Authenticate via MetaMask
 * Update table on successful registry
+* Show currentWithdrawal
 * Aesthetics
-* Encourage users to use MetaMask
 
 Testing
-* Less nesting!!! PROMISES/returns & pudding?
+* Less nesting & callback hell!!! PROMISES/returns & pudding?
 * Check if I'm CALLing at the correct places, not making TXs accidentally
 * Leverage events to debug & log testing process
 * Make use of beforeEach?
@@ -123,7 +102,30 @@ Scripting
   * web3.eth.sendTransaction({ from: acct1, value: web3.toWei(20, 'ether'), to: MM_ADDRESS })
   * Faucet
 
-## Lessons Learned
+## 03.16.17
+
+Tasks Completed
+* Updated gitignore & moved ignored files into ignored directory
+* Leverage inheritance to make StakeOne contract Mortal (owned, onlyOwner, kill)
+
+Learned
+* Git pull? Don't forget to `npm i` *facepalm*
+* Inheritance
+  * Import "path_to_file"
+  * contract A is B {}
+
+Questions
+* In StakeOne.sol, I import from Mortal & state StakeOne is Mortal
+  * When migrating StakeOne.sol, does truffle know to automatically include Mortal.sol?
+
+To Do
+* Split into NameReg & MultiSig, but ensure compatibility
+* Callback Hell (Tests)
+* Pre & post modifiers
+  * Test contract
+* Encapsulations (private/public)
+
+## Lessons Learned (Before 03.16.17)
 * Mapping pros & cons
   * KV store
   * Can't iterate easily
