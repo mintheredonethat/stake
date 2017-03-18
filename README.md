@@ -48,7 +48,7 @@ Here's to taking action, getting things done, and raising the bar.
 * Contract Testing
 * Event Logging
 * Interaction between many contracts (import, deploy) - CMC/doug?
-  * [Monax Tutorials: Modular Solidity](https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/)
+  * [Monax: Modular Solidity Tutorial 5](https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/)
 
 ## Learn as Dev
 
@@ -94,7 +94,7 @@ Testing
   * [Solidity Docs: Events](https://solidity.readthedocs.io/en/develop/contracts.html#events)
 * Usage of "contracts()" ("description" a la truffle - clean slate)
 * [Truffle Docs: JS Tests](http://truffleframework.com/docs/getting_started/javascript-tests)
-* [Consensys Noob 101 Medium Post ](https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv)
+* [Consensys: Noob 101 Medium Post ](https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv)
 
 ## 03.18.17
 
@@ -113,11 +113,20 @@ Learned
 Questions
 * When running tests, do the contracts get compiled & migrated, as per instructions dictated in the deployment?
 * How to leverage events in testing? Where does the event logging show up in `truffle test`?
+* How to listen for events to trigger functions in app.js?
 
 To Do
 * Show currentWithdrawal at top of UI
 * Update contract commenting
+* Finish testing all functions
+  * Towards the end of the initial contract (03.12.17), I neglected TDD
 * Contract factory for teams
+
+Bugs
+* executeWithdrawal() (in app.js; from truffle console is OK)
+* Registering a member before currentState = 0
+  * Will requirementChanged affect confirmation & state?
+* getMembers() - format as table
 
 ## 03.16.17
 
@@ -152,7 +161,7 @@ To Do
 * web3.toAscii(bytes32)
 * Deployment can take arguments; useful for contract constructors
 * Testing: return something, .then()
-  * [Chai JS Tests](http://chaijs.com/api/assert/)
+  * [Chai: JS Tests](http://chaijs.com/api/assert/)
   * TDD should guide & verify development
   * Use console for quick checks
 * Sending message (not TX) from contract to EOA (send ether)

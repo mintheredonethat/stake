@@ -19,6 +19,7 @@ var account;
 
 window.App = {
   start: function() {
+    console.log(`---------- start() ----------`);
     var self = this;
 
     // Bootstrap the MetaCoin abstraction for Use.
@@ -40,10 +41,34 @@ window.App = {
       accounts = accs;
       account = accounts[0];
       // self.refreshRegistry();
+      self.getBalance();
+      self.getCurrentWithdrawal();
+      self.getConfirmations();
+      self.getRequired();
     });
   },
 
+  getBalance: function() {
+    var self = this;
+    var balanceHolder = document.getElementById("balance");
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- getBalance() ----------`);
+      return instance.getBalance();
+    })
+    .then(function(balance) {
+      console.log(`Balance updated: ${balance}`);
+      balanceHolder.innerHTML = web3.fromWei(balance);
+      return balance;
+    })
+    .catch(function(error) {
+      console.log(`Balance not updated: ${error}`);
+    })
+  },
+
   setStatus: function(message) {
+    console.log(`---------- setStatus() ----------`);
     var status = document.getElementById("status");
     status.innerHTML = message;
   },
@@ -54,6 +79,7 @@ window.App = {
 
     StakeOne.deployed()
     .then(function(instance) {
+      console.log(`---------- getMembers() ----------`);
       return instance.getMembers()
     })
     .then(function(data) {
@@ -81,29 +107,150 @@ window.App = {
 
     StakeOne.deployed()
     .then(function(instance) {
+      console.log(`---------- register() ----------`);
       return instance.registerMember(name, address, {from: account});
     })
     .then(function() {
-      self.setStatus("Registration Complete");
+      console.log("Successfully registered member");
+      self.getRequired();
     })
     .catch(function(e) {
-      console.log(e);
-      self.setStatus("Error: Check Log");
+      console.log(`Failed to register member: ${e}`);
     })
-
-    // Robhitchen's Approach
-    // NameRegistry.deployed().then(function(instance) {
-    //   return instance.addUser(address, name, {from: account});
-    // }).then(function() {
-    //   self.setStatus('Registration Complete');
-    //   return instance.getUser(address);
-    // }).then(function() {
-    //   console.log(instance.getUser(address));
-    // }).catch(function(e) {
-    //   console.log(e);
-    //   self.setStatus('Error logged');
-    // })
   },
+
+  depositStake: function() {
+    var self = this;
+    var deposit = document.getElementById("deposit").value;
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- depositStake() ----------`);
+      return instance.depositStake({from: account, value: web3.toWei(deposit)});
+    })
+    .then(function(result) {
+      console.log("Successfully deposited... now refreshing balance");
+      self.getBalance();
+    })
+    .catch(function(error) {
+      console.log(`Failed to deposit: ${error}`);
+    })
+  },
+
+  getCurrentWithdrawal: function() {
+    var self = this;
+    var currentWithdrawalHolder = document.getElementById("current-withdrawal");
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- getCurrentWithdrawal() ----------`);
+      return instance.getCurrentWithdrawal({from: account});
+    })
+    .then(function(withdrawal) {
+      console.log(`Successfully got current withdrawal: ${withdrawal}`);
+      currentWithdrawalHolder.innerHTML = withdrawal[0];
+    })
+    .catch(function(error) {
+      console.log(`Failed to get current withdrawal: ${error}`)
+    })
+  },
+
+  getRequired: function() {
+    var self = this;
+    var requiredHolder = document.getElementById("required");
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- getRequired() ----------`);
+      instance.required();
+    })
+    .then(function(result) {
+      console.log(`Successfully got required count: ${result}`);
+      requiredHolder.innerHTML = result;
+    })
+    .catch(function(error) {
+      console.log(`Failed to get required count: ${error}`);
+    })
+  },
+
+  getConfirmations: function() {
+    var self = this;
+    var confirmationsHolder = document.getElementById("num-confirm");
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- getConfirmations() ----------`);
+      return instance.getCurrentWithdrawal();
+    })
+    .then(function(withdrawal) {
+      console.log(`Successfully got withdrawal confirmations count: ${withdrawal}`);
+      confirmationsHolder.innerHTML = withdrawal[3];
+    })
+    .catch(function(error) {
+      console.log(`Failed to get withdrawal in getConfirmations(): ${error}`);
+    })
+  },
+
+  proposeWithdrawal: function() {
+    var self = this;
+    var recipient = document.getElementById("recipient").value;
+    var amount = document.getElementById("amount").value;
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- proposeWithdrawal() ----------`);
+      return instance.proposeWithdrawal(recipient, web3.toWei(amount), {from: account});
+    })
+    .then(function(result) {
+      console.log(`Successfully proposed withdrawal: ${result}`);
+      return self.getCurrentWithdrawal();
+    })
+    .then(function(result) {
+      console.log(`Successfully proposed & getCurrentWithdrawal: ${result}`);
+    })
+    .catch(function(error) {
+      console.log(`Successfully proposed, but didn't get current withdrawal: ${error}`);
+    })
+  },
+
+  confirmWithdrawal: function() {
+    var self = this;
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- confirmWithdrawal() ----------`);
+      return instance.confirmWithdrawal({from: account});
+    })
+    .then(function(result) {
+      console.log(`Successfully confirmed withdrawal: ${result}`);
+      self.getConfirmations();
+    })
+    .then(function(confirmations) {
+      console.log(`Successfully got num confirms after confirmWithdrawal(): ${confirmations}`);
+    })
+  },
+
+  executeWithdrawal: function() {
+    var self = this;
+
+    StakeOne.deployed()
+    .then(function(instance) {
+      console.log(`---------- executeWithdrawal() ----------`);
+      return instance.executeWithdrawal({from: account});
+    })
+    .then(function(result) {
+      console.log(`Successfully executed withdrawal: ${result}`);
+      self.getBalance();
+    })
+    .then(function(balance) {
+      console.log(`Successfully got balance: ${balance}`);
+    })
+    // .catch(function(error) {
+    //   self.setStatus("Failed execution of withdrawal - check log");
+    //   console.log(error);
+    // })
+  }
+
 };
 
 window.addEventListener('load', function() {
