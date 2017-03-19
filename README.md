@@ -1,12 +1,6 @@
-# Stake
+# Stake (03.08.17 - Present)
 
-Inception: 03.08.17
-
-Stake holds you and your team accountable to achieving your goals.
-
-By placing a stake into a contract, the only way to recoup your ether is to meet your goals & have your teammates validate your progress.
-
-Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
+Stake holds you and your team accountable to achieving your goals. By placing a stake into a contract, the only way to recoup your ether is to meet your goals & have your teammates validate your progress. Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
 
 +++ GIF OF USAGE +++
 
@@ -33,9 +27,9 @@ I hope novices, like me, can learn from this repo.
 Also, once complete, I believe this platform will help people achieve their goals & realise a potential previously deemed inaccessible.
 I appreciate any feedback & contributions - thank you in advance.
 
-**Here's to taking action, getting things done, and raising the bar.**
+***Here's to taking action, getting things done, and raising the bar.***
 
-## Learning Goals of Stake
+## Initial Learning Goals of Stake
 
 * Comfort with solidity & truffle
 * Develop UI for contracts
@@ -43,7 +37,7 @@ I appreciate any feedback & contributions - thank you in advance.
 * Event Logging
 * Multi contract interaction
 
-## Learn as Dev
+## Developers:
 
 Important Files
 * contracts/StakeOne.sol
@@ -67,9 +61,9 @@ Test
 Contracts
 * Break up monolith contract & modularise w/ TDD
   * import/inherit from utility contracts, set dependencies/deployment correctly
-  * CMC Doug? [Monax: 5 Types Tutorial 1](https://monax.io/docs/tutorials/solidity/solidity_1_the_five_types_model/)
-  * [Monax: Action Driven Architecture Tutorial 2](https://monax.io/docs/tutorials/solidity/solidity_2_action_driven_architecture)
-  * [Monax: Modular Solidity Tutorial 5](https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/)
+  * CMC Doug? [Monax 1: 5 Types](https://monax.io/docs/tutorials/solidity/solidity_1_the_five_types_model/)
+  * [Monax 2: Action Driven Architecture](https://monax.io/docs/tutorials/solidity/solidity_2_action_driven_architecture)
+  * [Monax 5: Modular Solidity](https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/)
 * Encapsulation (coupling, private)
 * Current implementation enables DoS attack by never reaching required confirmations
   * [Ethereum Alarm Clock](http://www.ethereum-alarm-clock.com/)
@@ -90,7 +84,7 @@ Testing
   * [Solidity Docs: Events](https://solidity.readthedocs.io/en/develop/contracts.html#events)
 * Usage of "contracts()" ("description" à la truffle - clean slate)
 * [Truffle Docs: JS Tests](http://truffleframework.com/docs/getting_started/javascript-tests)
-* [Consensys: Noob 101 Medium Post ](https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv)
+* [Consensys Blog: Noob 101](https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv)
 
 ## 03.19.17
 
@@ -98,7 +92,7 @@ Completed
 * Include more tests for multi-sig functionality
 
 Learned
-* [Consensys: Intro to Events & Logs](https://media.consensys.net/technical-introduction-to-events-and-logs-in-ethereum-a074d65dd61e#.80bgdzgm8)
+* [Consensys Blog: Intro to Events & Logs](https://media.consensys.net/technical-introduction-to-events-and-logs-in-ethereum-a074d65dd61e#.80bgdzgm8)
   * Return Value for FrontEnd UI
   * Async Triggers w/ Data
   * Cheaper Form of Storage
@@ -152,7 +146,7 @@ To Do
 * Split into NameReg & MultiSig, but ensure compatibility
 * Callback Hell (Tests) --- _Updated 03.18.17_
 * Pre & post modifiers
-  * Implement a test contract (.sol) - [Androlo: Contract Oriented Programming](https://github.com/androlo/solidity-workshop/blob/master/tutorials/2016-07-02-contract-oriented-programming-II.md)
+  * Implement a test contract (.sol) - [Androlo: Contract Oriented Programming (COP)](https://github.com/androlo/solidity-workshop/blob/master/tutorials/2016-07-02-contract-oriented-programming-II.md)
 * Encapsulations (private/public)
 
 ## Lessons Learned (Before 03.16.17)
