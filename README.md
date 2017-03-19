@@ -1,33 +1,35 @@
-# Stake (03.08.17 - Present)
+# Stake (Active Development: 03.08.17 - Present)
 
 Stake holds you and your team accountable to achieving your goals. By placing a stake into a contract, the only way to recoup your ether is to meet your goals & have your teammates validate your progress. Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
 
 +++ GIF OF USAGE +++
++++ EXAMPLE SPREADSHEET OF GOALS +++
 
 ## Motivation for Stake
 
 It took self-awareness to realise my subtle form of procrastination.
 By "being in motion" as opposed to "taking action" ([James Clear](http://jamesclear.com/taking-action)), I was no closer to achieving my goals than I was X days ago.
-I *really* wanted to learn dapp development by building an app that would stop me from procrastinating.
+I *really* wanted to learn dapp development, and felt that building a dapp that would stop me from procrastinating would be a great way to do so.
 
 I formed an accountability group with my peers.
-Every week, we assess each others' progress and set goals (in measurable, actionable units) for the coming week.
-During assessment, we provide evidence of our progress to our members.
-If we fail the assessment, we are "punished" for not doing so.
-For example, I would send X ether to the contract & if I completed my weekly tasks:
-  * I initiate a withdrawal process, and upon team confirmation, I can be refunded my ether
-  * Otherwise, I would not recoup my stake (team would not consent to withdrawal); stake stays in team contract.
+Every week, we:
+* Assess each others' progress
+  * Facilitate peer assessment by providing evidence of your progress.
+  * Failed the assessment? Punishment
+* Set measurable goals for the coming week.
+* Set a stake for the coming week
 
-Initially, I looked at implementations of name registries & multi-sig wallets.
-Tutorials were either too simplistic or too complex.
+For example, I would state my goals, send X ether to a smart contract, complete my tasks by the end of the week, and:
+* I initiate a withdrawal process, and upon peer assessment/confirmation, I can be refunded my ether
+* Otherwise, I would not recoup my stake (team would not consent to withdrawal); stake stays in contract.
+
+I initially approached development by looking at multi-sig wallets & found the implementations either too simplistic or too complex.
 I decided to start small & build up the features I needed, thereby expanding my working knowledge.
-As of 03.12.17, I have formed the barebones foundation; I've met one of my goals for the week.
-I am learning a lot & regularly document my progress and code.
-I hope novices, like me, can learn from this repo.
-Also, once complete, I believe this platform will help people achieve their goals & realise a potential previously deemed inaccessible.
+I'm regularly documenting my progress so that novices, like me, can learn from this repo.
+I believe this platform will help people achieve their goals & realise a potential previously deemed inaccessible.
 I appreciate any feedback & contributions - thank you in advance.
 
-***Here's to taking action, getting things done, and raising the bar.***
+*Here's to taking action, getting things done, and raising the bar.*
 
 ## Initial Learning Goals of Stake
 
@@ -107,12 +109,12 @@ Next
 ## 03.18.17
 
 Completed
-* Update contract so register via owner or member (memberOrOwner modifier)
-* Update deployment, run script that:
-  * Sends Ether to MM address (hardcoded)
-  * Registers MM address (hardcoded) from testrpc accounts[0] (owner)
+* Updated contract registerMember function w/ memberOrOwner modifier
+* Changed deployment to:
+  * Send Ether to MM address (hardcoded)
+  * Register MM address (hardcoded) from testrpc accounts[0] (owner)
   * [Truffle Docs: Deployment](http://truffleframework.com/docs/getting_started/migrations#deployer-deploy-contract-args-options-)
-* Update testing, use promises
+* Updated testing to use promises
 
 Learned
 * Customisation of deployment using promises
@@ -142,7 +144,7 @@ Learned
   * contract A is B {}
   * Migrating A? Truffle automatically includes B
 
-To Do
+Next
 * Split into NameReg & MultiSig, but ensure compatibility
 * Callback Hell (Tests) --- _Updated 03.18.17_
 * Pre & post modifiers
