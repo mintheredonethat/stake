@@ -155,6 +155,7 @@ contract StakeOne is Mortal {
   // Returns an array containing the current withdrawal proposal's
   // id, destination, amount, numConfirm
   // Only members can call this when the withdrawal state is proposed
+  // SHOULD CHECK IF WITHDRAWALS EMPTY? ELSE, RETURN LAST ITEM
   function getCurrentWithdrawal()
   /*onlyState(WithdrawalState.proposed)*/
   /*onlyMember(msg.sender)*/

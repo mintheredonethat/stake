@@ -8,38 +8,32 @@ By placing a stake into a contract, the only way to recoup your ether is to meet
 
 Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
 
-+++ INSERT GIF OF USAGE +++
++++ GIF OF USAGE +++
 
 ## Motivation for Stake
 
-Self-awareness enlightened me to my subtle form of procrastination - I would learn a lot by digesting material, but never really applied what I learned.
+It took self-awareness to realise my subtle form of procrastination.
 By "being in motion" as opposed to "taking action" ([James Clear](http://jamesclear.com/taking-action)), I was no closer to achieving my goals than I was X days ago.
+I *really* wanted to learn dapp development by building an app that would stop me from procrastinating.
 
-I sought out peers to hold me accountable to completing my tasks.
-When we meet, we peer-assess our progress and discuss goals for the coming week.
-Each person deconstructs their goals into measurable, actionable units.
-In order to pass the week, you need evidence of progress (complete X units of goal Y).
-If you fail to meet your goals, you are "punished" for not doing so.
+I formed an accountability group with my peers.
+Every week, we assess each others' progress and set goals (in measurable, actionable units) for the coming week.
+During assessment, we provide evidence of our progress to our members.
+If we fail the assessment, we are "punished" for not doing so.
+For example, I would send X ether to the contract & if I completed my weekly tasks:
+  * I initiate a withdrawal process, and upon team confirmation, I can be refunded my ether
+  * Otherwise, I would not recoup my stake (team would not consent to withdrawal); stake stays in team contract.
 
-For example, I would send X ether to the contract.
-Complete weekly tasks? Initiate a withdrawal process, and upon team confirmation, I can be refunded my ether.
-Did not complete? Team would not consent to withdrawal, and I would not be able to recoup my stake; stake stays in team contract.
-
-One of my goals this week (03.06.17 - 03.12.17) was to *_really_* learn solidity & dapp development by "taking action".
-I wanted to build an app for my accountability group using smart contracts.
 Initially, I looked at implementations of name registries & multi-sig wallets.
-Though I grasped some of the code, there were many concepts that flew over my head.
-Copying & pasting doesn't really help me learn - I spiked some of their core concepts instead.
+Tutorials were either too simplistic or too complex.
 I decided to start small & build up the features I needed, thereby expanding my working knowledge.
 As of 03.12.17, I have formed the barebones foundation; I've met one of my goals for the week.
-
 I am learning a lot & regularly document my progress and code.
-I hope novices, who are in my position, can learn from this repo; I felt many of the public tutorials were either too simplistic or complex.
-Also, I hope people will use this platform (once complete) to achieve their goals & realise a potential previously deemed inaccessible.
-
+I hope novices, like me, can learn from this repo.
+Also, once complete, I believe this platform will help people achieve their goals & realise a potential previously deemed inaccessible.
 I appreciate any feedback & contributions - thank you in advance.
 
-Here's to taking action, getting things done, and raising the bar.
+**Here's to taking action, getting things done, and raising the bar.**
 
 ## Learning Goals of Stake
 
@@ -47,8 +41,7 @@ Here's to taking action, getting things done, and raising the bar.
 * Develop UI for contracts
 * Contract Testing
 * Event Logging
-* Interaction between many contracts (import, deploy) - CMC/doug?
-  * [Monax: Modular Solidity Tutorial 5](https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/)
+* Multi contract interaction
 
 ## Learn as Dev
 
@@ -73,18 +66,21 @@ Test
 
 Contracts
 * Break up monolith contract & modularise w/ TDD
-  * 5 types model or action-driven architecture? (Monax)
-  * import utility, set dependencies/deployment correctly
+  * import/inherit from utility contracts, set dependencies/deployment correctly
+  * CMC Doug? [Monax: 5 Types Tutorial 1](https://monax.io/docs/tutorials/solidity/solidity_1_the_five_types_model/)
+  * [Monax: Action Driven Architecture Tutorial 2](https://monax.io/docs/tutorials/solidity/solidity_2_action_driven_architecture)
+  * [Monax: Modular Solidity Tutorial 5](https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/)
 * Encapsulation (coupling, private)
 * Current implementation enables DoS attack by never reaching required confirmations
   * [Ethereum Alarm Clock](http://www.ethereum-alarm-clock.com/)
 * Many recurrent withdrawals vs. using finite state machine to manage one?
+  * Assumes contract interaction during team meeting
 * Oraclise through Google Spreadsheets?
 
 UI
 * React?
+  * Update table on successful registry
 * Authenticate via MetaMask
-* Update table on successful registry
 * Show currentWithdrawal
 * Aesthetics
 
@@ -92,13 +88,31 @@ Testing
 * Call vs. TXs
 * Leverage events to debug & log testing process
   * [Solidity Docs: Events](https://solidity.readthedocs.io/en/develop/contracts.html#events)
-* Usage of "contracts()" ("description" a la truffle - clean slate)
+* Usage of "contracts()" ("description" à la truffle - clean slate)
 * [Truffle Docs: JS Tests](http://truffleframework.com/docs/getting_started/javascript-tests)
 * [Consensys: Noob 101 Medium Post ](https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv)
 
+## 03.19.17
+
+Completed
+* Include more tests for multi-sig functionality
+
+Learned
+* [Consensys: Intro to Events & Logs](https://media.consensys.net/technical-introduction-to-events-and-logs-in-ethereum-a074d65dd61e#.80bgdzgm8)
+  * Return Value for FrontEnd UI
+  * Async Triggers w/ Data
+  * Cheaper Form of Storage
+
+Questions
+* How to run tests w/o having to restart testrpc?
+
+Next
+* Test edge cases (states & requirements & registry & numConfirm)
+* Implement event watchers in tests & frontend
+
 ## 03.18.17
 
-Tasks Completed
+Completed
 * Update contract so register via owner or member (memberOrOwner modifier)
 * Update deployment, run script that:
   * Sends Ether to MM address (hardcoded)
@@ -108,46 +122,37 @@ Tasks Completed
 
 Learned
 * Customisation of deployment using promises
-* Test using promises (returns; no callback hell/nesting)
+* Test using promises (return - no callback hell/nesting)
 
 Questions
-* When running tests, do the contracts get compiled & migrated, as per instructions dictated in the deployment?
-* How to leverage events in testing? Where does the event logging show up in `truffle test`?
-* How to listen for events to trigger functions in app.js?
+* When running tests, do the contracts get deployed based on 2_deploy_contracts?
 
-To Do
+Next
 * Show currentWithdrawal at top of UI
 * Update contract commenting
 * Finish testing all functions
-  * Towards the end of the initial contract (03.12.17), I neglected TDD
 * Contract factory for teams
-
-Bugs
-* executeWithdrawal() (in app.js; from truffle console is OK)
-* Registering a member before currentState = 0
-  * Will requirementChanged affect confirmation & state?
 * getMembers() - format as table
+* executeWithdrawal() (app.js broken; truffle console ok)
 
 ## 03.16.17
 
 Tasks Completed
-* Updated gitignore & moved ignored files into ignored directory
-* Leverage inheritance to make StakeOne contract Mortal (owned, onlyOwner, kill)
+* Updated gitignore w/ ignore directory
+* StakeOne inherits from Mortal (owned, onlyOwner, kill)
 
 Learned
 * Git pull ? `npm i` : (*facepalm*)
-* Inheritance
-  * A.sol
-    * Import "path_to_file"
-    * contract A is B {}
-  * When migrating A, Truffle knows to automatically include B
+* Inheritance (if A.sol)
+  * Import "path_to_file"
+  * contract A is B {}
+  * Migrating A? Truffle automatically includes B
 
 To Do
 * Split into NameReg & MultiSig, but ensure compatibility
 * Callback Hell (Tests) --- _Updated 03.18.17_
 * Pre & post modifiers
-  * Implement a test contract (.sol)
-  * [Androlo: Contract Oriented Programming](https://github.com/androlo/solidity-workshop/blob/master/tutorials/2016-07-02-contract-oriented-programming-II.md)
+  * Implement a test contract (.sol) - [Androlo: Contract Oriented Programming](https://github.com/androlo/solidity-workshop/blob/master/tutorials/2016-07-02-contract-oriented-programming-II.md)
 * Encapsulations (private/public)
 
 ## Lessons Learned (Before 03.16.17)
