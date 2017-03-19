@@ -33,8 +33,8 @@ contract("StakeOne Deployment", function(accounts) {
     .then(function(members) {
       var name = web3.toAscii(members[0][0]);
       var addr = members[1][0];
-      
-      // asserting name tough because \u0000 padding for string
+
+      // asserting name equal tough because \u0000 padding for string
       assert.include(name, "Satoshi", "Did not register/getMember");
       assert.include(members[1], addr, "Members does not include address; getMembers broken");
     })
@@ -54,8 +54,8 @@ contract("StakeOne Registry", function(accounts) {
     })
     .then(function(required) {
       // Not 1 because registration of MM member in deployment
-      assert.equal(required, 2, "Required not set");
-      assert.notEqual(required, 1, "Required not set");
+      assert.equal(required.toString(), 2, "Required not set");
+      assert.notEqual(required.toString(), 1, "Required not set");
     })
   })
 })
@@ -63,100 +63,102 @@ contract("StakeOne Registry", function(accounts) {
 // Multisig Functionality
 contract("StakeOne MultiSig", function(accounts) {
   it("Should getBalance", function() {
-
+    return StakeOne.deployed()
+    .then(function(instance) {
+      return instance.getBalance();
+    })
+    .then(function(balance) {
+      assert.equal(balance, 0, "Balance failed to initialise to 0");
+    })
   })
 
   it("Should depositStake", function() {
-
+    return StakeOne.deployed()
+    // .then(function(instance) {
+    //   var event = instance.allEvents().watch({}, '');
+    //   event.watch(function(error, result) {
+    //     if (error) {
+    //       console.log(error);
+    //     }
+    //     else {
+    //       console.log(result);
+    //     }
+    //   })
+    // })
+    .then(function(instance) {
+      instance.registerMember("alex", accounts[0])
+      return instance;
+    })
+    .then(function(instance) {
+      instance.depositStake({from: accounts[0], value: web3.toWei(1, 'ether')})
+      return instance;
+    })
+    .then(function(instance) {
+      return instance.getBalance();
+    })
+    .then(function(bal) {
+      assert.equal(web3.fromWei(bal), 1, "Did not depositStake");
+    })
   })
 
-  it("Should makeWithdrawal", function() {
-
+  // change requirement? Because can't unlock signer account of MM from deployment
+  it("Should proposeWithdrawal", function() {
+    return StakeOne.deployed()
+    .then(function(instance) {
+      instance.proposeWithdrawal(accounts[0], web3.toWei(0.5, 'ether'));
+      return instance;
+    })
+    .then(function(instance) {
+      return instance.currentState.call()
+    })
+    .then(function(currentState) {
+      assert.equal(currentState, 1, "currentState not set");
+      assert.notEqual(currentState, 0, "currentState not set");
+    })
   })
 
   it("Should getCurrentWithdrawal", function() {
-
+    return StakeOne.deployed()
+    .then(function(instance) {
+      return instance.getCurrentWithdrawal.call()
+    })
+    .then(function(w) {
+      assert.equal(w[0], 0, "getCurrentWithdrawal Failed (ID)");
+      assert.equal(w[1], accounts[0], "getCurrentWithdrawal failed (destination)");
+      assert.equal(w[2], web3.toWei(0.5, 'ether'), "getCurrentWithdrawal failed (amount)");
+      assert.equal(w[3], 0, "getCurrentWithdrawal failed (numConfirm)");
+    })
   })
 
-  it("Should confirmTransaction", function() {
-
+  it("Should confirmWithdrawal", function() {
+    return StakeOne.deployed()
+    .then(function(instance) {
+      instance.confirmWithdrawal({from: accounts[0]});
+      return instance
+    })
+    .then(function(instance) {
+      return instance.getCurrentWithdrawal.call()
+    })
+    .then(function(w) {
+      assert.equal(w[3], 1, "getCurrentWithdrawal failed (numConfirm)");
+    })
   })
+
+  // it("Should change currentState & allow for executeWithdrawal", function() {
+  //   return StakeOne.deployed()
+  //   .then(function(instance) {
+  //     // required = 2
+  //     // Other required member from deployment
+  //     instance.confirmWithdrawal({from: "0xfd2938c85530DdA11Bb9eFd08B12283d62664764"})
+  //     return instance;
+  //   })
+  //   .then(function(instance) {
+  //     return instance.currentState.call()
+  //   })
+  //   .then(function(currentState) {
+  //     console.log(currentState);
+  //     assert.equal(currentState, 2, "currentState not set");
+  //     assert.notEqual(currentState, 1, "currentState not set");
+  //   })
+  // })
 })
-
-  // it("Should depositStake | getBalance", function() {
-  //   return StakeOne.deployed()
-  //
-  //   .then(function(instance) {
-  //     return instance.registerMember("Satoshi", accounts[0])
-  //
-  //     .then(function() {
-  //       return instance.depositStake({from: accounts[0], value: web3.toWei(10, 'ether')})
-  //
-  //       .then(function() {
-  //         return instance.getBalance.call()
-  //
-  //         .then(function(response) {
-  //           assert.isAtLeast(response, web3.toWei(10), "Did not depositStake | getBalance");
-  //           return instance.proposeWithdrawal(accounts[1], web3.toWei(5, 'ether'), {from: accounts[0]})
-  //
-  //           .then(function() {
-  //             return instance.currentState()
-  //
-  //             .then(function(currentState) {
-  //               assert.equal(currentState, 1, 'Current state not set')
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // })
-
-  // it("Should makeWithdrawal | currentState | getCurrentWithdrawal", function() {
-  //   return StakeOne.deployed()
-  //
-  //   .then(function(instance) {
-  //     return instance.makeWithdrawal(accounts[1], web3.toWei(5, 'ether'), {from: accounts[0]})
-  //
-  //     .then(function() {
-  //       return instance.currentState()
-  //
-  //       .then(function(currentState) {
-  //         var id, destination, amount, numConfirm;
-  //
-  //         // currentState changes upon makeTransaction
-  //         assert.equal(currentState, 1, "currentState not set")
-  //         return instance.getCurrentWithdrawal({from: accounts[0]})
-  //
-  //         .then(function(response) {
-  //           id = response[0];
-  //           destination = response[1];
-  //           amount = response[2];
-  //           numConfirm = response[3];
-  //
-  //           // new TX, transactions[0], has the following properties
-  //           assert.equal(id, 0, "ID not set");
-  //           assert.equal(destination, accounts[1], "Destination not set");
-  //           assert.equal(amount, web3.toWei(5, 'ether'), "amount not set");
-  //           assert.equal(numConfirm, 0, "numConfirm not set");
-  //
-  //           return instance.confirmWithdrawal()
-  //
-  //           .then(function() {
-  //
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // })
-
-  // it("Should confirmTransaction", function() {
-  //   return StakeOne.deployed()
-  //
-  //   .then(function(instance) {
-  //     return instance.confirmTransction()
-  //
-  //
-  //   })
-  // })
