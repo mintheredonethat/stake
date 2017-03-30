@@ -1,158 +1,191 @@
-# Stake
+# Stake (Active Development: 03.08.17 - Present)
 
-Inception: 03.08.17
+  Stake holds you and your team accountable to achieving your goals. By placing a stake into a contract, the only way to recoup your ether is to meet your goals & have your teammates validate your progress. Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
 
-Stake holds you and your team accountable to achieving your goals.
+  +++ GIF OF USAGE +++
 
-By placing a stake into a contract, the only way to recoup your ether is to meet your goals & have your teammates validate your progress.
-
-Stake is developed through the Truffle framework, and leverages name registry and multi-signature capabilities via smart contract.
-
-+++ INSERT GIF OF USAGE +++
+  +++ EXAMPLE SPREADSHEET OF GOALS +++
 
 ## Motivation for Stake
 
-Self-awareness enlightened me to my subtle form of procrastination - I would learn a lot by digesting material, but never really applied what I learned.
-By "being in motion" as opposed to "taking action" (http://jamesclear.com/taking-action), I was no closer to achieving my goals than I was X days ago.
+  It took self-awareness to realise my subtle form of procrastination.
+  By "being in motion" as opposed to "taking action" ([James Clear](http://jamesclear.com/taking-action)), I was no closer to achieving my goals than I was X days ago.
+  I *really* wanted to learn dapp development, and felt that building a dapp that would stop me from procrastinating would be a great way to do so.
 
-I sought out accountability buddies to make sure I would complete my tasks.
-Each person in the team deconstructed their goals into measurable, actionable units.
-This makes it easier to track progress & fairly assess other teammates.
-Each week, we convene & discuss our goals for the week, as well as assess how the previous week had gone.
-In order to pass the week, you have to show evidence of progress for each goal (complete X units of Y).
-If you did not meet your goals, you would be "punished" for not doing so.
-For example, I would place X ether in escrow.
-If I complete my tasks, I initiate a withdrawal process, where I can be refunded my ether if the rest of team confirms my progress & my withdrawal.
-If I did not complete my tasks, I would not be able to recoup that ether - my teammates would not consent to withdrawal; the ether would instead be devoted to a team pot.
+  I formed an accountability group with my peers.
+  Every week, we:
+  * Set measurable goals for the coming week.
+  * Set a stake for the coming week
+  * Assess each others' progress
+    * Facilitate peer assessment by providing evidence of your progress.
+    * Failed the assessment? Punishment
 
-One of my goals this past week (03.06.17 - 03.12.17) was to *really* learn solidity & dapp development by "taking action".
-I wanted to build the basis (with smart contracts) to make this group accountability process easier.
-Initially, I looked at implementations of name registries & multi-sig wallets.
-Though I grasped some of the code, there were many concepts that flew over my head.
-Copying & pasting doesn't really help me learn - I spiked some of their core concepts instead.
-I decided to start small & build up the features I needed, increasing my working knowledge.
-As of 03.12.17, I have finished the barebones implementation - I've met one of my goals for the week :)
-Cheers, accountabili-buddies.
+  E.g., I state my goals, send X ether to a smart contract, complete my tasks by the end of the week, and:
+  * Initiate a withdrawal process, and upon peer assessment/confirmation, I can be refunded my stake
+  * Otherwise, I can't recoup my stake (team would not consent to withdrawal)
 
-I learned a lot throughout this journey and tried regularly documenting my process & code.
-I hope novice smart contract & dapp developers can learn from this repo, as many of the tutorials out there were for me either too simplistic or too complex.
-Additionally, I hope people will use this platform (once complete) to achieve their goals & realise a potential previously deemed inaccessible.
+  I initially approached development by looking at multi-sig wallets & found that the implementations were either too simplistic or too complex.
+  I decided to start small & build up the features I needed, thereby expanding my working knowledge.
+  I'm regularly documenting my progress so that novices, like me, can learn from this repo without having to spend time with trial & error.
 
-Here's to taking action, getting things done, and raising the bar.
+  I believe this platform will help people achieve their goals & realise a potential previously deemed inaccessible.
+  I appreciate any feedback & contributions - thank you in advance.
 
-## Learning Goals of Stake
+  *Here's to taking action, getting things done, and raising the bar.*
 
-* Comfort with solidity & truffle
-* Develop UI for contracts
-* Contract Testing
-* Event Logging
-* Interaction between many contracts (import, deploy) - CMC/doug?
-  * https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/
-* Contract factory for different teams
+## Initial Learning Goals of Stake
 
-## Learn as Dev
+  * Comfort with solidity & truffle
+  * Develop UI for contracts
+  * Contract Testing
+  * Event Logging
+  * Multi contract interaction
 
-Contracts
-* contracts/StakeOne.sol
-* test/TestStakeOne.js
+## Developers:
 
-Commands
-* `npm i`
-* `testrpc`
-* `rm -rf build/ && truffle compile && truffle migrate && truffle console`
-* `npm run dev`
-* `truffle test ./test/JS_FILE`
+  Important Files
+  * contracts/StakeOne.sol
+    * StakeOne, registerMember, getMembers, changeRequirement, depositStake, getBalance, getCurrentWithdrawal, proposeWithdrawal, confirmWithdrawal, executeWithdrawal
+  * test/TestStakeOne.js
+  * app/javascripts/app.js
+  * migrations/2_deploy_contracts.js
 
-I appreciate any feedback & contributions - thank you in advance.
+  Run
+  * `npm i`
+  * `testrpc`
+  * `rm -rf build/ && truffle compile && truffle migrate && truffle console`
+  * `npm run dev`
 
-## To Do
+  Test
+  * `testrpc`
+  * `truffle test ./test/JS_FILE`
 
-Contracts
-* Break up monolith contract & modularise w/ TDD (avoid callback hell w/ promises)
-  * 5 types model or action-driven architecture?
-  * import utility, set dependencies/deployment correctly
-* Encapsulation (coupling, private)
-* Current implementation enables DoS attack by never reaching required confirmations
-  * http://www.ethereum-alarm-clock.com/
-* Many recurrent withdrawals vs. using finite state machine to manage one?
-* Oraclise through Google Spreadsheets?
+## General To Do
 
-UI
-* Implement one... lol
+  Contracts
+  * Break up monolith contract & modularise w/ TDD
+    * import/inherit from utility contracts, set dependencies/deployment correctly
+    * CMC Doug? [Monax 1: 5 Types](https://monax.io/docs/tutorials/solidity/solidity_1_the_five_types_model/)
+    * [Monax 2: Action Driven Architecture](https://monax.io/docs/tutorials/solidity/solidity_2_action_driven_architecture)
+    * [Monax 5: Modular Solidity](https://monax.io/docs/tutorials/solidity/solidity_5_modular_solidity/)
+  * Encapsulation (coupling, private)
+  * Current implementation enables DoS attack by never reaching required confirmations
+    * [Ethereum Alarm Clock](http://www.ethereum-alarm-clock.com/)
+  * Many recurrent withdrawals vs. using finite state machine to manage one?
+    * Assumes contract interaction during team meeting
+  * Oraclise through Google Spreadsheets?
+
+  UI
   * React?
-* Authenticate via MetaMask
-* Update table on successful registry
-* Show currentWithdrawal
-* Aesthetics
+    * Update table on successful registry
+  * Authenticate via MetaMask
+  * Show currentWithdrawal
+  * Aesthetics
 
-Testing
-* Less nesting & callback hell!!! PROMISES/returns & pudding?
-* Check if I'm CALLing at the correct places, not making TXs accidentally
-* Leverage events to debug & log testing process
-* Make use of beforeEach?
-* More usage of "contracts()" (truffle version of description)
-* http://truffleframework.com/docs/getting_started/javascript-tests
-* https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv
-* https://solidity.readthedocs.io/en/develop/contracts.html#events
+  Testing
+  * Call vs. TXs
+  * Leverage events to debug & log testing process
+    * [Solidity Docs: Events](https://solidity.readthedocs.io/en/develop/contracts.html#events)
+  * Usage of "contracts()" ("description" à la truffle - clean slate)
+  * [Truffle Docs: JS Tests](http://truffleframework.com/docs/getting_started/javascript-tests)
+  * [Consensys Blog: Noob 101](https://medium.com/@ConsenSys/a-101-noob-intro-to-programming-smart-contracts-on-ethereum-695d15c1dab4#.e7p14uzfv)
 
-Scripting
-* Auto-set accounts
-  * var acct1 = web3.eth.accounts[0]
-* Send ETH to testnet address on MetaMask from local testrpc address
-  * web3.eth.sendTransaction({ from: acct1, value: web3.toWei(20, 'ether'), to: MM_ADDRESS })
-  * Faucet
+## 03.19.17
+
+  Completed
+  * Include more tests for multi-sig functionality
+
+  Learned
+  * [Consensys Blog: Intro to Events & Logs](https://media.consensys.net/technical-introduction-to-events-and-logs-in-ethereum-a074d65dd61e#.80bgdzgm8)
+    * Return Value for FrontEnd UI
+    * Async Triggers w/ Data
+    * Cheaper Form of Storage
+  * [Truffle Docs: Interacting w/ Contracts - Events](http://truffleframework.com/docs/getting_started/contracts#catching-events)
+
+  Questions
+  * How to run tests w/o having to restart testrpc?
+
+  Next
+  * Test edge cases (states & requirements & registry & numConfirm)
+  * Implement **event watchers** in tests & frontend
+  * Gas optimisation (so expensive to propose, confirm, execute)
+  * Seems that changing requirement should also go through confirmation process
+  * **Re-architect platform & TDD & git branches**
+  * Change deployment w/ MM Auth in mind (no hardcoded addresses)
+
+## 03.18.17
+
+  Completed
+  * Updated contract registerMember function w/ memberOrOwner modifier
+  * Changed deployment to:
+    * Send Ether to MM address (hardcoded)
+    * Register MM address (hardcoded) from testrpc accounts[0] (owner)
+    * [Truffle Docs: Deployment](http://truffleframework.com/docs/getting_started/migrations#deployer-deploy-contract-args-options-)
+  * Updated testing to use promises
+
+  Learned
+  * Customisation of deployment using promises
+  * Test using promises (return - no callback hell/nesting)
+
+  Questions
+  * When running tests, do the contracts get deployed based on 2_deploy_contracts?
+
+  Next
+  * Show currentWithdrawal at top of UI --- _Updated 03.19.17_
+  * Update contract commenting
+  * **Finish testing all functions**
+  * Contract factory for teams
+  * getMembers() - format as table
+  * **Bug: executeWithdrawal()** (app.js broken; truffle console ok)
 
 ## 03.16.17
 
-Tasks Completed
-* Updated gitignore & moved ignored files into ignored directory
-* Leverage inheritance to make StakeOne contract Mortal (owned, onlyOwner, kill)
+  Tasks Completed
+  * Updated gitignore w/ ignore directory
+  * StakeOne inherits from Mortal (owned, onlyOwner, kill)
 
-Learned
-* Git pull? Don't forget to `npm i` *facepalm*
-* Inheritance
-  * Import "path_to_file"
-  * contract A is B {}
+  Learned
+  * Git pull ? `npm i` : (*facepalm*)
+  * Inheritance (if A.sol)
+    * Import "path_to_file"
+    * contract A is B {}
+    * Migrating A? Truffle automatically includes B
 
-Questions
-* In StakeOne.sol, I import from Mortal & state StakeOne is Mortal
-  * When migrating StakeOne.sol, does truffle know to automatically include Mortal.sol?
-
-To Do
-* Split into NameReg & MultiSig, but ensure compatibility
-* Callback Hell (Tests)
-* Pre & post modifiers
-  * Test contract
-* Encapsulations (private/public)
+  Next
+  * Split into NameReg & MultiSig, but ensure compatibility
+  * Callback Hell (Tests) --- _Updated 03.18.17_
+  * Pre & post modifiers
+    * Implement a test contract (.sol) - [Androlo: Contract Oriented Programming (COP)](https://github.com/androlo/solidity-workshop/blob/master/tutorials/2016-07-02-contract-oriented-programming-II.md)
+  * Encapsulations (private/public)
 
 ## Lessons Learned (Before 03.16.17)
-* Mapping pros & cons
-  * KV store
-  * Can't iterate easily
-  * Mapping vs. Array
-* Easy contract interaction via abstraction
-  * No more hard coding address & ABI
-* Running app within window.App & using window.web3
-* web3.toAscii(bytes32)
-* Deployment can take arguments; useful for contract constructors
-* Testing: return something, .then()
-  * http://chaijs.com/api/assert/
-  * TDD should guide & verify development
-  * Use console for quick checks
-* Sending message from contract to EOA (send ether)
-* Monolith arises quickly
-  * Learn to modularize contracts
-  * Design before implementation - in this case, I wanted to learn by doing, was not focused on scalability
-* Many ways to implement contracts
-  * NameReg
-  * Multi-sig
-  * CRUCIAL TO DEFINE SCOPE & REQUIREMENTS of users
-* Exposed to many new concepts
-  * Learn by doing
-  * Find circle of competence & spiral outward from there
-  * Trouble implementing? Google, docs, community
-    * Should have a clear vision of what you want to implement
-* Design decisions
-  * Choosing a data structure over another (cost-benefit analysis)
-  * Contracts are expensive! Ethereum is built for redundancy - keep only core code in contracts
-* Finite state machine
+  * Mapping pros & cons
+    * KV store
+    * Can't iterate easily
+    * Mapping vs. Array
+  * Easy contract interaction via abstraction
+    * No more hard coding address & ABI
+  * Running app within window.App & using window.web3
+  * web3.toAscii(bytes32)
+  * Deployment can take arguments; useful for contract constructors
+  * Testing: return something, .then()
+    * [Chai: JS Tests](http://chaijs.com/api/assert/)
+    * TDD should guide & verify development
+    * Use console for quick checks
+  * Sending message (not TX) from contract to EOA (send ether)
+  * Monolith arises quickly
+    * Learn to modularize contracts
+    * Design before implementation - in this case, I wanted to learn by doing, was not focused on scalability
+  * Many ways to implement contracts
+    * NameReg, Multi-sig, etc.
+    * **Crucial to define scope & requirements** of users
+  * Exposed to many new concepts
+    * Learn by doing
+    * Find circle of competence & spiral outward from there
+    * Trouble implementing? Google, docs, community
+      * Should have a clear vision of what you want to implement
+  * Design decisions
+    * Choosing a data structure over another (cost-benefit analysis)
+    * Contracts are expensive! Ethereum is built for redundancy - keep only core code in contracts
+  * Finite state machine
+  * Deploys from web3.eth.accounts[0] automatically
