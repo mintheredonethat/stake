@@ -6,6 +6,9 @@
 
   +++ EXAMPLE SPREADSHEET OF GOALS +++
 
+  Temporary Hiatus from project (03.19.17 - Present)
+  * Front end masters 
+
 ## Motivation for Stake
 
   It took self-awareness to realise my subtle form of procrastination.
@@ -110,7 +113,8 @@
   * Implement **event watchers** in tests & frontend
   * Gas optimisation (so expensive to propose, confirm, execute)
   * Seems that changing requirement should also go through confirmation process
-  * **Re-architect platform**
+  * **Re-architect platform & TDD & git branches**
+  * Change deployment w/ MM Auth in mind (no hardcoded addresses)
 
 ## 03.18.17
 
